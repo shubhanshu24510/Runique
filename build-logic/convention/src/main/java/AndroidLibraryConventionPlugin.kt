@@ -1,28 +1,28 @@
 import com.android.build.api.dsl.LibraryExtension
-import com.android.builder.model.AndroidLibrary
-import com.shubhans.convention.ExtensionTypes
+import com.shubhans.convention.ExtensionType
 import com.shubhans.convention.configureBuildTypes
 import com.shubhans.convention.configureKotlinAndroid
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.internal.impldep.org.glassfish.jaxb.runtime.v2.schemagen.xmlschema.ExtensionType
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.kotlin
 
-class AndroidLibraryConventionPlugin : Plugin<Project> {
+class AndroidLibraryConventionPlugin: Plugin<Project> {
+
     override fun apply(target: Project) {
         target.run {
             pluginManager.run {
                 apply("com.android.library")
                 apply("org.jetbrains.kotlin.android")
             }
+
             extensions.configure<LibraryExtension> {
                 configureKotlinAndroid(this)
 
                 configureBuildTypes(
                     commonExtension = this,
-                    extensionType = ExtensionTypes.LIBRARY
+                    extensionType = ExtensionType.LIBRARY
                 )
 
                 defaultConfig {
@@ -30,10 +30,10 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
                     consumerProguardFiles("consumer-rules.pro")
                 }
             }
+
             dependencies {
                 "testImplementation"(kotlin("test"))
             }
-
         }
     }
 }

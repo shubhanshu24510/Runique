@@ -9,16 +9,17 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 
 internal fun Project.configureBuildTypes(
-    commonExtension: CommonExtension<*, *, *, *, *, *>,
-    extensionType: ExtensionTypes
+    commonExtension: CommonExtension<*, *, *, *, *>,
+    extensionType: ExtensionType
 ) {
     commonExtension.run {
         buildFeatures {
             buildConfig = true
         }
-        val apiKey = gradleLocalProperties(rootDir,providers).getProperty("API_KEY")
-        when (extensionType) {
-            ExtensionTypes.APPLICATION -> {
+
+        val apiKey = gradleLocalProperties(rootDir).getProperty("API_KEY")
+        when(extensionType) {
+            ExtensionType.APPLICATION -> {
                 extensions.configure<ApplicationExtension> {
                     buildTypes {
                         debug {
@@ -30,8 +31,7 @@ internal fun Project.configureBuildTypes(
                     }
                 }
             }
-
-            ExtensionTypes.LIBRARY -> {
+            ExtensionType.LIBRARY -> {
                 extensions.configure<LibraryExtension> {
                     buildTypes {
                         debug {
@@ -53,7 +53,7 @@ private fun BuildType.configureDebugBuildType(apiKey: String) {
 }
 
 private fun BuildType.configureReleaseBuildType(
-    commonExtension: CommonExtension<*, *, *, *, *, *>,
+    commonExtension: CommonExtension<*, *, *, *, *>,
     apiKey: String
 ) {
     buildConfigField("String", "API_KEY", "\"$apiKey\"")

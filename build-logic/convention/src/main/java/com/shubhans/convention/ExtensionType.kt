@@ -1,6 +1,6 @@
 package com.shubhans.convention
 
-enum class ExtensionTypes {
+enum class ExtensionType {
     APPLICATION,
     LIBRARY
 }
