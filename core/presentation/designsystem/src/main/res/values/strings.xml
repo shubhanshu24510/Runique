@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Runique</string>
+    <string name="email">Email</string>
+    <string name="must_a_valid_email">Must be a valid email</string>
+    <string name="password_visible">Password Visible</string>
+    <string name="password_not_visible">Password Not Visible</string>
+</resources>
