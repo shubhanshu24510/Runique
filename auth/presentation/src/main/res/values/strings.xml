@@ -3,6 +3,7 @@
     <string name="welcome_to_runique">Welcome to Runique!</string>
     <string name="runique_description">Track your runs, set goals and achieve fitness milestones with our intuitive app.</string>
     <string name="sign_up">Sign up</string>
+<<<<<<< HEAD
     <string name="log_in">Login</string>
     <string name="sign_in">Sign in</string>
     <string name="create_account">Create Account</string>
@@ -17,4 +18,7 @@
     <string name="contains_uppercase_char">Contains uppercase character</string>
     <string name="register">Register</string>
 
+=======
+    <string name="sign_in">Sign in</string>
+>>>>>>> origin/master
 </resources>
