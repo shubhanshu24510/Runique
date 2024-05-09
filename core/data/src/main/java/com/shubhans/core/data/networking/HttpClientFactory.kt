@@ -1,9 +1,15 @@
 package com.shubhans.core.data.networking
 
 import com.shubhans.core.data.BuildConfig
+import com.shubhans.core.domain.AuthInfo
+import com.shubhans.core.domain.SessionStorage
+import com.shubhans.core.domain.utils.Result
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.engine.cio.CIO
+import io.ktor.client.plugins.auth.Auth
+import io.ktor.client.plugins.auth.providers.BearerTokens
+import io.ktor.client.plugins.auth.providers.bearer
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
@@ -11,13 +17,13 @@ import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.header
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
-import io.ktor.http.headers
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
-import org.koin.core.logger.Level
 import timber.log.Timber
 
-class HttpClientFactory {
+class HttpClientFactory(
+    private val sessionStorage: SessionStorage
+) {
     fun build(): HttpClient {
         return HttpClient(CIO) {
             install(ContentNegotiation) {
@@ -37,7 +43,46 @@ class HttpClientFactory {
             }
             defaultRequest {
                 contentType(ContentType.Application.Json)
-                header("x-api-Key",BuildConfig.API_KEY)
+                header("x-api-Key", BuildConfig.API_KEY)
+            }
+            install(Auth) {
+                bearer {
+                    loadTokens {
+                        val authInfo = sessionStorage.get()
+                        BearerTokens(
+                            accessToken = authInfo?.accessToken ?: "",
+                            refreshToken = authInfo?.refreshToken ?: ""
+                        )
+                    }
+                    refreshTokens {
+                        val info = sessionStorage.get()
+                        val response = client.post<AccessTokenRequest, AccessTokenResponse>(
+                            route = "/accessToken",
+                            body = AccessTokenRequest(
+                                refreshToken = info?.refreshToken ?: "",
+                                userId = info?.userId ?: "",
+                            )
+                        )
+                        if (response is Result.Success) {
+                            val newAuthInfo = AuthInfo(
+                                accessToken = response.data.accessToken,
+                                refreshToken = info?.refreshToken ?: "",
+                                userId = info?.userId ?: ""
+                            )
+                            sessionStorage.set(newAuthInfo)
+                            BearerTokens(
+                                accessToken = newAuthInfo.accessToken,
+                                refreshToken = newAuthInfo.refreshToken
+
+                            )
+                        } else {
+                            BearerTokens(
+                                accessToken = "",
+                                refreshToken = ""
+                            )
+                        }
+                    }
+                }
             }
         }
     }
