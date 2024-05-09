@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
 import com.shubhans.core.presentation.designsystem.RuniqueTheme
 
 class MainActivity : ComponentActivity() {
@@ -21,7 +22,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             RuniqueTheme {
-                Text(text = "Hello,Bellaq")
+                val navController = rememberNavController()
+                NavigationRoot(navController = navController)
             }
         }
     }

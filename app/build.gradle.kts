@@ -56,6 +56,7 @@ dependencies {
 
     // Splash screen
     implementation(libs.androidx.core.splashscreen)
+    implementation(libs.bundles.koin)
 
     // Timber
     implementation(libs.timber)

@@ -12,6 +12,7 @@ import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
+import io.ktor.http.cio.Request
 import io.ktor.util.network.UnresolvedAddressException
 import kotlinx.coroutines.CancellationException
 
@@ -30,9 +31,9 @@ suspend inline fun <reified Response : Any> HttpClient.get(
 }
 
 
-suspend inline fun <reified Response : Any> HttpClient.post(
+suspend inline fun <reified Request,reified Response : Any> HttpClient.post(
     route: String,
-    body: String
+    body: Request
 ): Result<Response, DataError.NetworkError> {
     return safeCall {
         post {
