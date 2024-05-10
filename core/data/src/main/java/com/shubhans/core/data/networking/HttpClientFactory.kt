@@ -43,15 +43,15 @@ class HttpClientFactory(
             }
             defaultRequest {
                 contentType(ContentType.Application.Json)
-                header("x-api-Key", BuildConfig.API_KEY)
+                header("x-api-key", BuildConfig.API_KEY)
             }
             install(Auth) {
                 bearer {
                     loadTokens {
-                        val authInfo = sessionStorage.get()
+                        val info = sessionStorage.get()
                         BearerTokens(
-                            accessToken = authInfo?.accessToken ?: "",
-                            refreshToken = authInfo?.refreshToken ?: ""
+                            accessToken = info?.accessToken ?: "",
+                            refreshToken = info?.refreshToken ?: ""
                         )
                     }
                     refreshTokens {
@@ -60,20 +60,21 @@ class HttpClientFactory(
                             route = "/accessToken",
                             body = AccessTokenRequest(
                                 refreshToken = info?.refreshToken ?: "",
-                                userId = info?.userId ?: "",
+                                userId = info?.userId ?: ""
                             )
                         )
-                        if (response is Result.Success) {
+
+                        if(response is Result.Success) {
                             val newAuthInfo = AuthInfo(
                                 accessToken = response.data.accessToken,
                                 refreshToken = info?.refreshToken ?: "",
                                 userId = info?.userId ?: ""
                             )
                             sessionStorage.set(newAuthInfo)
+
                             BearerTokens(
                                 accessToken = newAuthInfo.accessToken,
                                 refreshToken = newAuthInfo.refreshToken
-
                             )
                         } else {
                             BearerTokens(

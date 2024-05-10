@@ -1,4 +1,4 @@
-package com.shubhans.auth.data.repository
+package com.shubhans.auth.data
 
 import kotlinx.serialization.Serializable
 

@@ -1,11 +1,11 @@
-package com.shubhans.auth.data.repository
+package com.shubhans.auth.data
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class LogInResponse(
+data class LoginResponse(
     val accessToken: String,
     val refreshToken: String,
-    val expirationTimeStamp: Long,
+    val accessTokenExpirationTimestamp: Long,
     val userId: String
 )

@@ -3,6 +3,7 @@ package com.shubhans.runique
 import android.app.Application
 import com.shubhans.auth.data.di.authDataModule
 import com.shubhans.auth.presentation.AuthViewModelModule
+import com.shubhans.auth.presentation.di.authViewModuleModule
 import com.shubhans.core.data.di.coreDataModule
 import com.shubhans.runique.di.appModule
 import io.ktor.http.ContentType
@@ -22,7 +23,7 @@ class RuniqueApp : Application() {
             androidContext(this@RuniqueApp)
             modules(
                 authDataModule,
-                AuthViewModelModule,
+                authViewModuleModule,
                 appModule,
                 coreDataModule
             )

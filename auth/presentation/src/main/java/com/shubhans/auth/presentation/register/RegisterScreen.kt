@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.ClickableText
-import androidx.compose.foundation.text2.input.TextFieldLineLimits
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -22,7 +21,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.pointer.motionEventSpy
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
@@ -55,7 +53,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun RegisterScreenRoot(
     onSignInClick: () -> Unit,
-    onSignInSuccessful: () -> Unit,
+    onRegisterSucessfull: () -> Unit,
     viewModel: RegisterViewModel = koinViewModel()
 ) {
     val context = LocalContext.current
@@ -68,7 +66,7 @@ fun RegisterScreenRoot(
                     context,
                     R.string.registration_sucesfull,
                     Toast.LENGTH_LONG).show()
-                onSignInSuccessful()
+                onRegisterSucessfull()
             }
             is RegisterEvent.Error -> {
                 keyboardController?.hide()
@@ -149,7 +147,7 @@ fun RegisterScreen(
                 state = state.password,
                 isPasswordVisible = state.isPasswordVisible,
                 onTogglePasswordVisibility = {
-                    onAction(RegisterAction.ToggleVisibilyClick)
+                    onAction(RegisterAction.ToggleVisibilityClick)
                 },
                 title = stringResource(id = R.string.password),
                 hint = stringResource(id = R.string.password),

@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 class RegisterViewModel(
-    private val userDataValidater: UserDataValidater,
+    private val userDataValidator: UserDataValidater,
     private val repository: AuthRepository
 ) : ViewModel() {
     var state by mutableStateOf(RegisterState())
@@ -32,7 +32,7 @@ class RegisterViewModel(
 
     init {
         state.email.textAsFlow().onEach { email ->
-            val isEmailValid = userDataValidater.isValidEmail(email.toString())
+            val isEmailValid = userDataValidator.isValidEmail(email.toString())
             state = state.copy(
                 isEmailValid = isEmailValid,
                 canRegister = isEmailValid && state.passwordValidationState.isValidPassword
@@ -42,7 +42,7 @@ class RegisterViewModel(
             .launchIn(viewModelScope)
 
         state.password.textAsFlow().onEach { password ->
-            val passwordValidationState = userDataValidater.validatePassword(password.toString())
+            val passwordValidationState = userDataValidator.validatePassword(password.toString())
             state = state.copy(
                 passwordValidationState = passwordValidationState,
                 canRegister = state.isEmailValid && passwordValidationState.isValidPassword
@@ -55,13 +55,12 @@ class RegisterViewModel(
     fun OnAction(action: RegisterAction) {
         when (action) {
             RegisterAction.onRegisterClick -> register()
-            RegisterAction.ToggleVisibilyClick -> state = state.copy(
+            RegisterAction.ToggleVisibilityClick -> state = state.copy(
                 isPasswordVisible = !state.isPasswordVisible
             )
 
-            RegisterAction.onLoginClick -> TODO()
+            RegisterAction.onLoginClick -> {}
         }
-
     }
 
     private fun register() {
