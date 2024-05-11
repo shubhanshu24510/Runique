@@ -10,6 +10,7 @@ import androidx.navigation.compose.navigation
 import com.shubhans.auth.presentation.intro.IntroScreenRoot
 import com.shubhans.auth.presentation.logIn.LoginScreenRoot
 import com.shubhans.auth.presentation.register.RegisterScreenRoot
+import com.shubhans.run.presentation.RunOverViewScreen
 
 
 @Composable
@@ -76,7 +77,7 @@ private fun NavGraphBuilder.runGraph(navController: NavHostController) {
         startDestination = "run_Overview", route = "run"
     ) {
         composable(route = "run_Overview") {
-            Text(text = "Run Overview")
+           RunOverViewScreen()
         }
     }
 }

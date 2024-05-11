@@ -4,4 +4,6 @@
     <string name="must_a_valid_email">Must be a valid email</string>
     <string name="password_visible">Password Visible</string>
     <string name="password_not_visible">Password Not Visible</string>
+    <string name="arrow_back">Arrow Back\n</string>
+    <string name="more_options">More Options</string>
 </resources>
