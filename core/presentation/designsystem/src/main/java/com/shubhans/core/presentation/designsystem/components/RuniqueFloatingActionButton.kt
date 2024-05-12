@@ -1,6 +1,7 @@
 package com.shubhans.core.presentation.designsystem.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -25,31 +26,31 @@ import com.shubhans.core.presentation.designsystem.RuniqueGreen30
 fun RuniqueFloatingActionButton(
     icon: ImageVector,
     onClick: () -> Unit,
-    contentDescription: String? = null,
     modifier: Modifier = Modifier,
+    contentDescription: String? = null,
     iconSize: Dp = 25.dp
 ) {
     Box(
         modifier = Modifier
             .size(75.dp)
             .clip(CircleShape)
-            .background(RuniqueGreen30),
+            .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.3f))
+            .clickable(onClick = onClick),
         contentAlignment = Alignment.Center
     ) {
         Box(
             modifier = Modifier
                 .size(50.dp)
                 .clip(CircleShape)
-                .padding(12.dp)
-                .background(RuniqueGreen),
+                .background(MaterialTheme.colorScheme.primary)
+                .padding(12.dp),
             contentAlignment = Alignment.Center
         ) {
             Icon(
                 imageVector = icon,
                 contentDescription = contentDescription,
                 tint = MaterialTheme.colorScheme.onPrimary,
-                modifier = Modifier
-                    .size(iconSize)
+                modifier = Modifier.size(iconSize)
             )
         }
     }

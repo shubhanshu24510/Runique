@@ -4,4 +4,11 @@
     <string name="analytics">Analytics</string>
     <string name="logout">Logout</string>
     <string name="logo_icon">LogoIcon</string>
+    <string name="active_run">Active Run</string>
+    <string name="stop_run">Stop Run</string>
+    <string name="start_run">Start Run</string>
+    <string name="duration">Duration</string>
+    <string name="distance">Diatance</string>
+    <string name="heart_rate">Heart rate</string>
+    <string name="pace">Pace</string>
 </resources>

@@ -5,7 +5,7 @@ import com.shubhans.auth.data.di.authDataModule
 import com.shubhans.auth.presentation.AuthViewModelModule
 import com.shubhans.auth.presentation.di.authViewModuleModule
 import com.shubhans.core.data.di.coreDataModule
-import com.shubhans.run.presentation.di.runPresentationModule
+import com.shubhans.run.presentation.di.runOverViewmodule
 import com.shubhans.runique.di.appModule
 import io.ktor.http.ContentType
 import org.koin.android.ext.koin.androidContext
@@ -27,7 +27,7 @@ class RuniqueApp : Application() {
                 authViewModuleModule,
                 appModule,
                 coreDataModule,
-                runPresentationModule
+                runOverViewmodule
             )
         }
     }

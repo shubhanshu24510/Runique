@@ -1,6 +1,5 @@
 package com.shubhans.runique
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -10,19 +9,20 @@ import androidx.navigation.compose.navigation
 import com.shubhans.auth.presentation.intro.IntroScreenRoot
 import com.shubhans.auth.presentation.logIn.LoginScreenRoot
 import com.shubhans.auth.presentation.register.RegisterScreenRoot
-import com.shubhans.run.presentation.RunOverViewScreen
+import com.shubhans.run.presentation.run_active.ActiveRunScreen
+import com.shubhans.run.presentation.run_active.ActiveRunScreenRoot
+import com.shubhans.run.presentation.run_overView.RunOverViewScreenRoot
 
 
 @Composable
 fun NavigationRoot(
-    navController: NavHostController,
-    isLoggedIn: Boolean
+    navController: NavHostController, isLoggingIn: Boolean
 ) {
     NavHost(
-        navController = navController, startDestination = if(isLoggedIn) "run" else "auth"
+        navController = navController, startDestination = if (isLoggingIn) "run" else "auth"
     ) {
-        authGraph(navController = navController)
-        runGraph(navController = navController)
+        authGraph(navController)
+        runGraph(navController)
     }
 }
 
@@ -77,7 +77,14 @@ private fun NavGraphBuilder.runGraph(navController: NavHostController) {
         startDestination = "run_Overview", route = "run"
     ) {
         composable(route = "run_Overview") {
-           RunOverViewScreen()
+            RunOverViewScreenRoot(
+                onStartRunClicked = {
+                    navController.navigate("active_run")
+                }
+            )
+        }
+        composable(route = "active_run") {
+            ActiveRunScreenRoot()
         }
     }
 }

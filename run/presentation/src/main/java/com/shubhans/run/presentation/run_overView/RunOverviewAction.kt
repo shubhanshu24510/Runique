@@ -1,4 +1,4 @@
-package com.shubhans.run.presentation
+package com.shubhans.run.presentation.run_overView
 
 sealed interface RunOverviewAction {
     object onRunClicked : RunOverviewAction

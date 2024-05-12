@@ -1,21 +1,21 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
+@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class,
+    ExperimentalMaterial3Api::class
+)
 
-package com.shubhans.run.presentation
+package com.shubhans.run.presentation.run_overView
 
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.shubhans.core.presentation.designsystem.AnalyticsIcon
 import com.shubhans.core.presentation.designsystem.LogoIcon
 import com.shubhans.core.presentation.designsystem.RunIcon
@@ -24,18 +24,26 @@ import com.shubhans.core.presentation.designsystem.components.DropDownMenuItem
 import com.shubhans.core.presentation.designsystem.components.ReuniqueToolbar
 import com.shubhans.core.presentation.designsystem.components.RuniqueFloatingActionButton
 import com.shubhans.core.presentation.designsystem.components.RuniqueScafflod
+import com.shubhans.run.presentation.R
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun RunOverViewScreenRoot(
+    onStartRunClicked: () -> Unit,
     viewViewModel: RunOverViewViewModel = koinViewModel()
 ) {
-    RunOverViewScreen(onAction = viewViewModel::onAction)
+    RunOverViewScreen(onAction = {action ->
+        when(action){
+            RunOverviewAction.onRunClicked -> onStartRunClicked()
+            else -> Unit
+        }
+        viewViewModel.onAction(action)
+    })
 }
 
 @Composable
 fun RunOverViewScreen(
-    onAction: (RunOverviewAction) -> Unit = {}
+    onAction: (RunOverviewAction) -> Unit
 ) {
     val topAppBarState = rememberTopAppBarState()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(
@@ -80,7 +88,8 @@ fun RunOverViewScreen(
 @Composable
 private fun PreviewRunOverViewScreenRoot() {
     RuniqueTheme {
-        RunOverViewScreen()
+        RunOverViewScreen(
+            onAction = {}
+        )
     }
-
 }

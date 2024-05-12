@@ -9,6 +9,8 @@ android {
 dependencies {
     implementation(projects.core.domain)
     implementation(projects.run.domain)
+    implementation(projects.core.presentation.ui)
+    implementation(projects.core.presentation.designsystem)
 
     implementation(libs.coil.compose)
     implementation(libs.google.maps.android.compose)
