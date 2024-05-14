@@ -77,11 +77,9 @@ private fun NavGraphBuilder.runGraph(navController: NavHostController) {
         startDestination = "run_Overview", route = "run"
     ) {
         composable(route = "run_Overview") {
-            RunOverViewScreenRoot(
-                onStartRunClicked = {
-                    navController.navigate("active_run")
-                }
-            )
+            RunOverViewScreenRoot(onStartRunClicked = {
+                navController.navigate("active_run")
+            })
         }
         composable(route = "active_run") {
             ActiveRunScreenRoot()
