@@ -16,4 +16,5 @@
     <string name="location_rationale">In order to track your location, this app needs your permission for that. Please click on \"Okay\" to grant it.</string>
     <string name="notification_rationale">In order to display the current time as a notification, this app needs your permission for that. Please click on \"Okay\" to grant it.</string>
     <string name="okay">Okay</string>
+    <string name="run_icon">Run Icon</string>
 </resources>
