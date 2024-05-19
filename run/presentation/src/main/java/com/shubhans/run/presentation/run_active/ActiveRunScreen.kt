@@ -35,6 +35,7 @@ import com.shubhans.core.presentation.designsystem.components.RuniqueScafflod
 import com.shubhans.run.domain.RunData
 import com.shubhans.run.presentation.R
 import com.shubhans.run.presentation.run_active.components.ActiveRunDataCard
+import com.shubhans.run.presentation.run_active.maps.TrackerMap
 import com.shubhans.run.presentation.utils.hasLocationPermission
 import com.shubhans.run.presentation.utils.hasNotificationPermission
 import com.shubhans.run.presentation.utils.shouldShowLocationPermissionRationale
@@ -130,6 +131,14 @@ fun ActiveRunScreen(
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.surface)
         ) {
+            TrackerMap(
+                isFinishedRun = state.isRunFinished,
+                currentLocation = state.currentLocation,
+                locations = state.runData.locations,
+                onSnapShot = {},
+                modifier = Modifier
+                    .fillMaxSize()
+            )
             ActiveRunDataCard(
                 elapsedTime = state.elapsedTime,
                 runData = state.runData,
@@ -158,8 +167,8 @@ fun ActiveRunScreen(
             },
             onDismiss = { /*TODO*/ },
             primaryButtonAction = {
-                RuniqueOutlinedActionButton(text = stringResource(id =R.string.okay),
-                    isLoading =false,
+                RuniqueOutlinedActionButton(text = stringResource(id = R.string.okay),
+                    isLoading = false,
                     onClick = {
                         onAction(ActiveRunAction.dismissRationalDialog)
                         permissionLauncher.requestRuniquePermission(context)
@@ -170,7 +179,7 @@ fun ActiveRunScreen(
     }
 }
 
-private fun ActivityResultLauncher<Array<String>>.requestRuniquePermission(context: Context){
+private fun ActivityResultLauncher<Array<String>>.requestRuniquePermission(context: Context) {
     val hasLocationPermission = context.hasLocationPermission()
     val hasNotificationPermission = context.hasNotificationPermission()
 
