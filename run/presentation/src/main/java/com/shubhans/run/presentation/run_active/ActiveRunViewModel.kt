@@ -1,14 +1,13 @@
 package com.shubhans.run.presentation.run_active
 
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.snapshotFlow
-import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shubhans.run.domain.RunningTracker
+import com.shubhans.run.presentation.run_active.services.ActiveRunServices
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -17,14 +16,18 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
-import timber.log.Timber
 
 class ActiveRunViewModel(
     private val runningTracker: RunningTracker
 ) : ViewModel(
 
 ) {
-    var state by mutableStateOf(ActiveRunState())
+    var state by mutableStateOf(
+        ActiveRunState(
+            shouldTrack = ActiveRunServices.isServiceActive && runningTracker.isTracking.value,
+            hasStartedRunning = ActiveRunServices.isServiceActive
+        )
+    )
         private set
     private val eventChannel = Channel<ActiveRunEvent>()
     val events = eventChannel.receiveAsFlow()
@@ -55,7 +58,7 @@ class ActiveRunViewModel(
 
         isTracking
             .onEach { isTracking ->
-                runningTracker.setisTracking(isTracking)
+                runningTracker.setsTracking(isTracking)
             }.launchIn(viewModelScope)
 
         runningTracker.currentLocation
@@ -124,6 +127,16 @@ class ActiveRunViewModel(
                     showNotificationRationale = false
                 )
             }
+
+            else -> Unit
+        }
+
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        if (!ActiveRunServices.isServiceActive) {
+            runningTracker.stopObservingLocation()
         }
     }
 }

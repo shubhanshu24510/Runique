@@ -23,8 +23,7 @@ import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
 class RunningTracker(
-    private val locationObserver: LocationObserver,
-    private val applicationScope: CoroutineScope
+    private val locationObserver: LocationObserver, private val applicationScope: CoroutineScope
 ) {
     private val _elapsedTime = MutableStateFlow(Duration.ZERO)
     val elapsedTime = _elapsedTime.asStateFlow()
@@ -32,7 +31,9 @@ class RunningTracker(
     private val _runData = MutableStateFlow(RunData())
     val runData = _runData.asStateFlow()
 
-    private val isTracking = MutableStateFlow(false)
+    private val _isTracking = MutableStateFlow(false)
+    val isTracking = _isTracking.asStateFlow()
+
     private val isObservingLocation = MutableStateFlow(false)
 
     val currentLocation = isObservingLocation.flatMapLatest { isObservingLocation ->
@@ -44,6 +45,17 @@ class RunningTracker(
     )
 
     init {
+        isTracking.onEach { isTracking ->
+            if (!isTracking) {
+                val newList = buildList {
+                    addAll(runData.value.locations)
+                    add(emptyList<LoactionTimeStamp>())
+                }.toList()
+                _runData.update {
+                    it.copy(locations = newList)
+                }
+            }
+        }
         isTracking.flatMapLatest { isTracking ->
             if (isTracking) {
                 Timer.TimeandEmits()
@@ -87,12 +99,10 @@ class RunningTracker(
                     pace = avgSecondPerKm.seconds
                 )
             }
-
         }.launchIn(applicationScope)
     }
-
-    fun setisTracking(isTracking: Boolean) {
-        this.isTracking.value = isTracking
+    fun setsTracking(isTracking: Boolean) {
+        this._isTracking.value = isTracking
     }
 
     fun startObservingLocation() {

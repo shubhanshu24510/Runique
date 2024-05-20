@@ -1,16 +1,18 @@
 package com.shubhans.runique
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import androidx.navigation.navDeepLink
 import com.shubhans.auth.presentation.intro.IntroScreenRoot
 import com.shubhans.auth.presentation.logIn.LoginScreenRoot
 import com.shubhans.auth.presentation.register.RegisterScreenRoot
-import com.shubhans.run.presentation.run_active.ActiveRunScreen
 import com.shubhans.run.presentation.run_active.ActiveRunScreenRoot
+import com.shubhans.run.presentation.run_active.services.ActiveRunServices
 import com.shubhans.run.presentation.run_overView.RunOverViewScreenRoot
 
 
@@ -81,8 +83,27 @@ private fun NavGraphBuilder.runGraph(navController: NavHostController) {
                 navController.navigate("active_run")
             })
         }
-        composable(route = "active_run") {
-            ActiveRunScreenRoot()
+        composable(route = "active_run",
+            deepLinks = listOf(navDeepLink { uriPattern = "runique://active_run" })
+        ) {
+            val context = LocalContext.current
+            ActiveRunScreenRoot(onServiceToggled = { isServiceActive ->
+                if (isServiceActive) {
+                    context.startService(
+                        ActiveRunServices.createStartIntent(
+                            context = context, activityClass = MainActivity::class.java
+                        )
+                    )
+                } else {
+                    context.startService(
+                        ActiveRunServices.createStopIntent(
+                            context = context
+                        )
+                    )
+                }
+            }
+
+            )
         }
     }
 }
