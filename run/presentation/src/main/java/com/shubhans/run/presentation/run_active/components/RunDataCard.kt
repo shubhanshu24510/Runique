@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.sp
 import com.shubhans.core.presentation.designsystem.RuniqueTheme
 import com.shubhans.run.domain.RunData
 import com.shubhans.core.presentation.ui.toFormattedKms
-import com.shubhans.core.presentation.ui.toFormattedString
 import com.shubhans.core.presentation.ui.toFormattedPace
 import com.shubhans.run.presentation.R
 import kotlin.time.Duration

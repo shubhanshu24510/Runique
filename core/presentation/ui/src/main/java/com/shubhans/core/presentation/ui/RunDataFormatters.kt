@@ -7,7 +7,7 @@ import kotlin.math.roundToInt
 import kotlin.time.Duration
 
 @SuppressLint("DefaultLocale")
-fun Duration.toFormattedString(): String {
+fun Duration.formatted(): String {
     val totalSeconds = inWholeSeconds
     val hours = totalSeconds / 3600
     val minutes = String.format("%02d", totalSeconds / (60 * 60))
@@ -18,6 +18,12 @@ fun Duration.toFormattedString(): String {
 
 fun Double.toFormattedKms(): String {
     return "${this.roundToDecimals(1)} km"
+}
+fun Double.toFormattedKmh(): String {
+    return "${roundToDecimals(1)} km/h"
+}
+fun Int.toFormattedMeters(): String {
+    return "${this} m"
 }
 
 @SuppressLint("DefaultLocale")
