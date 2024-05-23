@@ -12,7 +12,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.TaskStackBuilder
 import androidx.core.content.getSystemService
 import androidx.core.net.toUri
-import com.shubhans.core.presentation.ui.formatted
+import com.shubhans.core.presentation.ui.toFormattedString
 import com.shubhans.run.domain.RunningTracker
 import com.shubhans.run.presentation.R
 import kotlinx.coroutines.CoroutineScope
@@ -92,7 +92,7 @@ class ActiveRunServices : Service() {
     private fun updateNotification() {
         runningTracker.elapsedTime.onEach { elapsedTime ->
             val notification = baseNotification
-                .setContentText(elapsedTime.formatted())
+                .setContentText(elapsedTime.toFormattedString())
                 .build()
             notificationManager.notify(1, notification)
         }.launchIn(serviceScope)

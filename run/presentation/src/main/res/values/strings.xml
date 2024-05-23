@@ -10,7 +10,6 @@
     <string name="duration">Duration</string>
     <string name="distance">Diatance</string>
     <string name="heart_rate">Heart rate</string>
-    <string name="avg_speed">Ø Speed</string>
     <string name="pace">Pace</string>
     <string name="permission_required">Permission required</string>
     <string name="location_notification_rationale">In order to track your location and display the current time as a notification, this app needs your permission for that. Please click on \"Okay\" to grant it.</string>
@@ -22,11 +21,4 @@
     <string name="resume_or_finish_run">Do you want to resume or finish the workout?</string>
     <string name="resume">Resume</string>
     <string name="finish">Finish</string>
-    <string name="map_image">MapImage</string>
-    <string name="error_couldnt_load_image">Couldn\'t load image.</string>
-    <string name="running_time">Totel running time</string>
-    <string name="max_speed">Max Speed</string>
-    <string name="totel_elevation">Total Elevation</string>
-    <string name="delete">Delete</string>
-
 </resources>
