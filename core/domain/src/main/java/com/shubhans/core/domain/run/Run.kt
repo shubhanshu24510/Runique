@@ -8,11 +8,11 @@ import kotlin.time.DurationUnit
 data class Run(
     val id: String?,
     val duration: Duration,
-    val dateTimeUtc: ZonedDateTime,
+    val dateTimeUTC: ZonedDateTime,
     val distanceMeters: Int,
     val location: Location,
     val maxSpeedKmh: Double,
-    val totalElevationMeters: Int,
+    val totalElevationGainMeters: Int,
     val mapPictureUrl: String?
 ) {
     val avgSpeedKmh: Double
