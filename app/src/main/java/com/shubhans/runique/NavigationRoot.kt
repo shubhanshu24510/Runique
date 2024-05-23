@@ -83,7 +83,8 @@ private fun NavGraphBuilder.runGraph(navController: NavHostController) {
                 navController.navigate("active_run")
             })
         }
-        composable(route = "active_run",
+        composable(
+            route = "active_run",
             deepLinks = listOf(navDeepLink { uriPattern = "runique://active_run" })
         ) {
             val context = LocalContext.current
