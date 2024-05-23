@@ -4,6 +4,7 @@ package com.shubhans.run.presentation.run_active
 
 import android.Manifest
 import android.content.Context
+import android.graphics.Bitmap
 import android.os.Build
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -43,6 +44,7 @@ import com.shubhans.run.presentation.utils.hasNotificationPermission
 import com.shubhans.run.presentation.utils.shouldShowLocationPermissionRationale
 import com.shubhans.run.presentation.utils.shouldShowNotificationPermissionRationale
 import org.koin.androidx.compose.koinViewModel
+import java.io.ByteArrayOutputStream
 import kotlin.time.Duration.Companion.minutes
 
 @Composable
@@ -113,7 +115,7 @@ private fun ActiveRunScreen(
             permissionLauncher.requestRuniquePermissions(context)
         }
     }
-    
+
     LaunchedEffect(key1 = state.isRunFinished) {
         if (state.isRunFinished) {
             onServiceToggled(false)
@@ -165,7 +167,17 @@ private fun ActiveRunScreen(
                 isRunFinished = state.isRunFinished,
                 currentLocation = state.currentLocation,
                 locations = state.runData.locations,
-                onSnapshot = {},
+                onSnapshot = { bmp ->
+                    val stream = ByteArrayOutputStream()
+                    stream.use {
+                        bmp.compress(
+                            Bitmap.CompressFormat.JPEG,
+                            100,
+                            it
+                        )
+                    }
+                    onAction(ActiveRunAction.onRunProcessed(stream.toByteArray()))
+                },
                 modifier = Modifier
                     .fillMaxSize()
             )

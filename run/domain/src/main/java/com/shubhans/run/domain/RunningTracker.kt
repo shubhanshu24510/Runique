@@ -101,6 +101,7 @@ class RunningTracker(
             }
         }.launchIn(applicationScope)
     }
+
     fun setsTracking(isTracking: Boolean) {
         this._isTracking.value = isTracking
     }
@@ -111,6 +112,13 @@ class RunningTracker(
 
     fun stopObservingLocation() {
         isObservingLocation.value = false
+    }
+
+    fun finishedRun() {
+        stopObservingLocation()
+        setsTracking(false)
+        _elapsedTime.value = Duration.ZERO
+        _runData.value = RunData()
     }
 
     private fun <T> List<List<T>>.replaceLast(replacement: List<T>): List<List<T>> {

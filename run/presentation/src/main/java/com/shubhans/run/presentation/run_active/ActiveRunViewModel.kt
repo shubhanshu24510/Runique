@@ -6,6 +6,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.shubhans.core.domain.location.Location
+import com.shubhans.core.domain.run.Run
+import com.shubhans.run.domain.LocationDataCalculator
 import com.shubhans.run.domain.RunningTracker
 import com.shubhans.run.presentation.run_active.services.ActiveRunServices
 import kotlinx.coroutines.channels.Channel
@@ -16,6 +19,9 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
+import java.time.ZoneId
+import java.time.ZonedDateTime
 
 class ActiveRunViewModel(
     private val runningTracker: RunningTracker
@@ -88,7 +94,13 @@ class ActiveRunViewModel(
     fun onAction(action: ActiveRunAction) {
         when (action) {
             ActiveRunAction.dismissRationalDialog -> TODO()
-            ActiveRunAction.onFinishRunClicked -> TODO()
+            ActiveRunAction.onFinishRunClicked -> {
+                state = state.copy(
+                    isRunFinished = true,
+                    isSavingRun = true
+                )
+            }
+
             ActiveRunAction.onBackClicked -> {
                 state = state.copy(
                     shouldTrack = false
@@ -128,11 +140,40 @@ class ActiveRunViewModel(
                 )
             }
 
+            is ActiveRunAction.onRunProcessed -> {
+                finishedRun(action.mapPictureBytes)
+
+            }
+
             else -> Unit
         }
-
     }
 
+    private fun finishedRun(mapPictureBytes: ByteArray) {
+        val locations = state.runData.locations
+        if (locations.isEmpty() || locations.size <= 1) {
+            state = state.copy(isSavingRun = false)
+            return
+        }
+
+        viewModelScope.launch {
+            val run = Run(
+                id = null,
+                duration = state.elapsedTime,
+                dateTimeUTC = ZonedDateTime.now()
+                    .withZoneSameInstant(ZoneId.of("UTC")),
+                distanceMeters = state.runData.distanceMeters,
+                location = state.currentLocation ?: Location(0.0, 0.0),
+                maxSpeedKmh = LocationDataCalculator.getMaxSpeedKmh(locations),
+                totalElevationMeters = LocationDataCalculator.getTotalElevationMeters(locations),
+                mapPictureUrl = null
+            )
+            runningTracker.finishedRun()
+            state = state.copy(
+                isSavingRun = false
+            )
+        }
+    }
     override fun onCleared() {
         super.onCleared()
         if (!ActiveRunServices.isServiceActive) {
