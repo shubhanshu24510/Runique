@@ -7,6 +7,7 @@ import com.shubhans.auth.presentation.di.authViewModuleModule
 import com.shubhans.core.data.di.coreDataModule
 import com.shubhans.core.database.di.databaseModule
 import com.shubhans.run.location.di.locationModule
+import com.shubhans.run.network.di.networkKoinModule
 import com.shubhans.run.presentation.di.runPresentationModule
 import com.shubhans.runique.di.appModule
 import io.ktor.http.ContentType
@@ -34,7 +35,8 @@ class RuniqueApp : Application() {
                 coreDataModule,
                 runPresentationModule,
                 locationModule,
-                databaseModule
+                databaseModule,
+                networkKoinModule
             )
         }
     }

@@ -36,7 +36,7 @@ class RoomLocalRunDataSource(
         }
     }
 
-    override suspend fun getRuns(): Flow<List<Run>> {
+    override  fun getRuns(): Flow<List<Run>> {
         return runDao.getRuns().map { runs ->
                 runs.map { it.toRun() }
             }

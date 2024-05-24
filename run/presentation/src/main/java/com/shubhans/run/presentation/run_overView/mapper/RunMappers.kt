@@ -24,7 +24,7 @@ fun Run.toRunUi(): RunUi {
         pace = duration.toFormattedPace(distanceKm),
         avgSpeed = avgSpeedKmh.toFormattedKmh(),
         maxSpeed = maxSpeedKmh.toFormattedKmh(),
-        totelElevation = totalElevationGainMeters.toFormattedMeters(),
+        totelElevation = totalElevationMeters.toFormattedMeters(),
         mapPictureUrl = mapPictureUrl
     )
 }

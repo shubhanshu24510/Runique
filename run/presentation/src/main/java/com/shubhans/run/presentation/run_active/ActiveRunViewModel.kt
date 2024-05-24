@@ -8,6 +8,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shubhans.core.domain.location.Location
 import com.shubhans.core.domain.run.Run
+import com.shubhans.core.domain.run.RunRepository
+import com.shubhans.core.domain.utils.Result
+import com.shubhans.core.presentation.ui.asUiText
 import com.shubhans.run.domain.LocationDataCalculator
 import com.shubhans.run.domain.RunningTracker
 import com.shubhans.run.presentation.run_active.services.ActiveRunServices
@@ -24,7 +27,8 @@ import java.time.ZoneId
 import java.time.ZonedDateTime
 
 class ActiveRunViewModel(
-    private val runningTracker: RunningTracker
+    private val runningTracker: RunningTracker,
+    private val runRepository: RunRepository
 ) : ViewModel(
 
 ) {
@@ -155,7 +159,6 @@ class ActiveRunViewModel(
             state = state.copy(isSavingRun = false)
             return
         }
-
         viewModelScope.launch {
             val run = Run(
                 id = null,
@@ -169,6 +172,15 @@ class ActiveRunViewModel(
                 mapPictureUrl = null
             )
             runningTracker.finishedRun()
+
+            when(val result = runRepository.upsertRun(run,mapPictureBytes)){
+                is Result.Error -> {
+                    eventChannel.send(ActiveRunEvent.Error(result.error.asUiText()))
+                }
+                is Result.Success -> {
+                    eventChannel.send(ActiveRunEvent.SavedRun)
+                }
+            }
             state = state.copy(
                 isSavingRun = false
             )

@@ -88,21 +88,28 @@ private fun NavGraphBuilder.runGraph(navController: NavHostController) {
             deepLinks = listOf(navDeepLink { uriPattern = "runique://active_run" })
         ) {
             val context = LocalContext.current
-            ActiveRunScreenRoot(onServiceToggled = { isServiceActive ->
-                if (isServiceActive) {
-                    context.startService(
-                        ActiveRunServices.createStartIntent(
-                            context = context, activityClass = MainActivity::class.java
+            ActiveRunScreenRoot(
+                onFinishRun = {
+                    navController.navigateUp()
+                },
+                onBack = {
+                    navController.navigateUp()
+                },
+                onServiceToggled = { isServiceActive ->
+                    if (isServiceActive) {
+                        context.startService(
+                            ActiveRunServices.createStartIntent(
+                                context = context, activityClass = MainActivity::class.java
+                            )
                         )
-                    )
-                } else {
-                    context.startService(
-                        ActiveRunServices.createStopIntent(
-                            context = context
+                    } else {
+                        context.startService(
+                            ActiveRunServices.createStopIntent(
+                                context = context
+                            )
                         )
-                    )
+                    }
                 }
-            }
 
             )
         }

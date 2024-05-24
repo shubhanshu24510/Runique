@@ -6,6 +6,7 @@ import android.Manifest
 import android.content.Context
 import android.graphics.Bitmap
 import android.os.Build
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResultLauncher
@@ -34,6 +35,7 @@ import com.shubhans.core.presentation.designsystem.components.RuniqueDialog
 import com.shubhans.core.presentation.designsystem.components.RuniqueFloatingActionButton
 import com.shubhans.core.presentation.designsystem.components.RuniqueOutlinedActionButton
 import com.shubhans.core.presentation.designsystem.components.RuniqueScafflod
+import com.shubhans.core.presentation.ui.ObserverEvent
 import com.shubhans.run.domain.RunData
 import com.shubhans.run.presentation.R
 import com.shubhans.run.presentation.run_active.components.ActiveRunDataCard
@@ -49,13 +51,42 @@ import kotlin.time.Duration.Companion.minutes
 
 @Composable
 fun ActiveRunScreenRoot(
+    onFinishRun: () -> Unit,
+    onBack: () -> Unit,
     viewModel: ActiveRunViewModel = koinViewModel(),
     onServiceToggled: (isServiceRunning: Boolean) -> Unit
 ) {
+    val context = LocalContext.current
+    ObserverEvent(flow = viewModel.events) { event ->
+        when (event) {
+            is ActiveRunEvent.Error -> {
+                Toast.makeText(
+                    context,
+                    event.error.asString(context),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+            ActiveRunEvent.SavedRun -> {
+                onFinishRun()
+            }
+        }
+    }
     ActiveRunScreen(
         state = viewModel.state,
-        onAction = viewModel::onAction,
-        onServiceToggled = onServiceToggled
+        onServiceToggled = onServiceToggled,
+        onAction = { action ->
+            when (action) {
+                is ActiveRunAction.onBackClicked -> {
+                    if (!viewModel.state.hasStartedRunning) {
+                        onBack()
+                    }
+                }
+
+                else -> Unit
+            }
+            viewModel.onAction(action)
+        }
     )
 }
 
