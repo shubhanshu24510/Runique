@@ -1,5 +1,8 @@
 package com.shubhans.core.data.run
 
+import com.shubhans.core.database.dto.RunPendingSyncDao
+import com.shubhans.core.database.mappers.toRun
+import com.shubhans.core.domain.SessionStorage
 import com.shubhans.core.domain.run.LocalRunDataSource
 import com.shubhans.core.domain.run.RemoteDataSource
 import com.shubhans.core.domain.run.Run
@@ -10,13 +13,18 @@ import com.shubhans.core.domain.utils.EmptyResult
 import com.shubhans.core.domain.utils.Result
 import com.shubhans.core.domain.utils.asEmptyDataResult
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class OfflineFirstRunRepository(
     private val localDataSource: LocalRunDataSource,
     private val remoteDataSource: RemoteDataSource,
-    private val applicationScope: CoroutineScope
+    private val applicationScope: CoroutineScope,
+    private val runPendingSyncDao: RunPendingSyncDao,
+    private val sessionStorage: SessionStorage
 ) : RunRepository {
     override fun getRuns(): Flow<List<Run>> {
         return localDataSource.getRuns()
@@ -43,12 +51,10 @@ class OfflineFirstRunRepository(
         }
         val runWithId = run.copy(id = localResult.data)
         val remoteResult = remoteDataSource.PostRun(
-            runWithId, mapPicture
+            run = runWithId, mapPicture = mapPicture
         )
-
         return when (remoteResult) {
             is Result.Error -> {
-                //Fetch the run from the local data source and update the remote data source
                 Result.Success(Unit)
             }
 
@@ -59,10 +65,60 @@ class OfflineFirstRunRepository(
             }
         }
     }
+
     override suspend fun deleteRun(id: RunId) {
         localDataSource.deleteRun(id)
+        val isPendingSync = runPendingSyncDao.getRunPendingSyncsEntity(id) != null
+        if (isPendingSync) {
+            runPendingSyncDao.deleteRunPendingSyncEntity(id)
+            return
+        }
         val remoteResult = applicationScope.async {
             remoteDataSource.deteleRun(id)
         }.await()
+    }
+
+    override suspend fun syncPendingRuns() {
+        withContext(Dispatchers.IO) {
+            val userId = sessionStorage.get()?.userId ?: return@withContext
+            val createdRuns = async {
+                runPendingSyncDao.getAllRunPendingSyncsEntities(userId)
+            }
+            val deleteRuns = async {
+                runPendingSyncDao.getAllRunPendingSyncsEntities(userId)
+            }
+
+            val createJobs = createdRuns
+                .await()
+                .map {
+                    launch {
+                        val run = it.run.toRun()
+                        when (remoteDataSource.PostRun(run, it.mapPictureUrl)) {
+                            is Result.Error -> Unit
+                            is Result.Success -> {
+                                applicationScope.launch {
+                                    runPendingSyncDao.deleteRunPendingSyncEntity(it.run.id)
+                                }.join()
+                            }
+                        }
+                    }
+                }
+            val deletedJobs = deleteRuns
+                .await()
+                .map {
+                    launch {
+                        when (remoteDataSource.deteleRun(it.run.id)) {
+                            is Result.Error -> Unit
+                            is Result.Success -> {
+                                applicationScope.launch {
+                                    runPendingSyncDao.deleteRunPendingSyncEntity(it.run.id)
+                                }.join()
+                            }
+                        }
+                    }
+                }
+            createJobs.forEach { it.join() }
+            deletedJobs.forEach { it.join() }
+        }
     }
 }

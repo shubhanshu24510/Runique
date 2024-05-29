@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.shubhans.core.presentation.designsystem.RuniqueTheme
+import com.shubhans.core.presentation.ui.formatted
 import com.shubhans.run.domain.RunData
 import com.shubhans.core.presentation.ui.toFormattedKms
 import com.shubhans.core.presentation.ui.toFormattedPace
@@ -29,7 +30,7 @@ import kotlin.time.Duration.Companion.minutes
 
 @Composable
 fun ActiveRunDataCard(
-    elapsedTime: Duration,
+    elapsedTime:Duration,
     runData: RunData,
     modifier: Modifier = Modifier
 ) {
@@ -42,7 +43,7 @@ fun ActiveRunDataCard(
     ) {
         RunDataItem(
             title = stringResource(id = R.string.duration),
-            value = elapsedTime.toString(),
+            value = elapsedTime.formatted(),
             valueFontSize = 32.sp
         )
         Row(
@@ -53,11 +54,6 @@ fun ActiveRunDataCard(
             RunDataItem(
                 title = stringResource(id = R.string.distance),
                 value = (runData.distanceMeters / 1000.0).toFormattedKms(),
-                modifier = Modifier.defaultMinSize(minWidth = 75.dp)
-            )
-            RunDataItem(
-                title = stringResource(id = R.string.heart_rate),
-                value = runData.pace.toString(),
                 modifier = Modifier.defaultMinSize(minWidth = 75.dp)
             )
             RunDataItem(
@@ -94,7 +90,7 @@ fun RunDataItem(
 private fun PreviewRunDataCard() {
     RuniqueTheme {
         ActiveRunDataCard(
-            elapsedTime = 10.minutes,
+            elapsedTime = 100.minutes,
             runData = RunData(
                 distanceMeters = 1000,
                 pace = 3.minutes

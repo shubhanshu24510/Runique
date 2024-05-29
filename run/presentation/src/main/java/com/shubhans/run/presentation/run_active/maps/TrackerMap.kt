@@ -42,8 +42,8 @@ import com.google.maps.android.compose.MarkerComposable
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberMarkerState
 import com.google.maps.android.ktx.awaitSnapshot
-import com.shubhans.core.domain.location.LoactionTimeStamp
 import com.shubhans.core.domain.location.Location
+import com.shubhans.core.domain.location.LocationTimeStamp
 import com.shubhans.core.presentation.designsystem.RunIcon
 import com.shubhans.run.presentation.R
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -56,7 +56,7 @@ import kotlinx.coroutines.launch
 fun TrackerMap(
     isRunFinished: Boolean,
     currentLocation: Location?,
-    locations: List<List<LoactionTimeStamp>>,
+    locations: List<List<LocationTimeStamp>>,
     onSnapshot: (Bitmap) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -120,11 +120,9 @@ fun TrackerMap(
                 }
         } else modifier
     ) {
-        RuniquePolyLine(locations = locations)
         MapEffect(locations, isRunFinished, triggeredCapture, createSnapShotJob) {map ->
             if (isRunFinished && triggeredCapture && createSnapShotJob == null) {
                 triggeredCapture = false
-
                 val boundBuilder = LatLngBounds.builder()
                 locations.flatten().forEach { location ->
                     boundBuilder.include(
@@ -150,6 +148,7 @@ fun TrackerMap(
                 }
             }
         }
+        RuniquePolyLine(locations = locations)
         if (!isRunFinished && currentLocation != null) {
             MarkerComposable(
                 currentLocation,

@@ -11,12 +11,12 @@ import kotlin.time.Duration.Companion.milliseconds
 fun RunDto.toRun(): Run {
     return Run(
         id = id,
-        duration = durationMills.milliseconds,
+        duration = durationMillis.milliseconds,
         dateTimeUTC = Instant.parse(dateTimeUtc).atZone(ZoneId.of("UTC")),
         distanceMeters = distanceMeters,
         location = Location(lat, long),
         maxSpeedKmh = maxSpeedKmh,
-        totalElevationMeters = totalElavationMeters,
+        totalElevationMeters = totalElevationMeters,
         mapPictureUrl = mapPictureUrl
     )
 }
@@ -26,7 +26,7 @@ fun Run.toCreateRunRequest(): CreateRunRequest {
         id = id!!,
         durationMills = duration.inWholeMicroseconds,
         distanceMeters = distanceMeters,
-        epochMillis = dateTimeUTC.toEpochSecond(),
+        epochMillis =  dateTimeUTC.toEpochSecond() * 1000L,
         lat = location.lat,
         long = location.long,
         avgSpeedKmh = avgSpeedKmh,

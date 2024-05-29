@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class)
+@file:OptIn(ExperimentalMaterial3Api::class)
 
 package com.shubhans.run.presentation.run_active
 
@@ -40,7 +40,8 @@ import com.shubhans.run.domain.RunData
 import com.shubhans.run.presentation.R
 import com.shubhans.run.presentation.run_active.components.ActiveRunDataCard
 import com.shubhans.run.presentation.run_active.maps.TrackerMap
-import com.shubhans.run.presentation.run_active.services.ActiveRunServices
+import com.shubhans.run.presentation.run_active.services.ActiveRunService
+import com.shubhans.run.presentation.run_overView.components.RunDataItemCard
 import com.shubhans.run.presentation.utils.hasLocationPermission
 import com.shubhans.run.presentation.utils.hasNotificationPermission
 import com.shubhans.run.presentation.utils.shouldShowLocationPermissionRationale
@@ -51,10 +52,10 @@ import kotlin.time.Duration.Companion.minutes
 
 @Composable
 fun ActiveRunScreenRoot(
-    onFinishRun: () -> Unit,
+    onFinish: () -> Unit,
     onBack: () -> Unit,
+    onServiceToggle: (isServiceRunning: Boolean) -> Unit,
     viewModel: ActiveRunViewModel = koinViewModel(),
-    onServiceToggled: (isServiceRunning: Boolean) -> Unit
 ) {
     val context = LocalContext.current
     ObserverEvent(flow = viewModel.events) { event ->
@@ -63,18 +64,16 @@ fun ActiveRunScreenRoot(
                 Toast.makeText(
                     context,
                     event.error.asString(context),
-                    Toast.LENGTH_SHORT
+                    Toast.LENGTH_LONG
                 ).show()
             }
 
-            ActiveRunEvent.SavedRun -> {
-                onFinishRun()
-            }
+            ActiveRunEvent.SavedRun -> onFinish()
         }
     }
     ActiveRunScreen(
         state = viewModel.state,
-        onServiceToggled = onServiceToggled,
+        onServiceToggle = onServiceToggle,
         onAction = { action ->
             when (action) {
                 is ActiveRunAction.onBackClicked -> {
@@ -93,8 +92,8 @@ fun ActiveRunScreenRoot(
 @Composable
 private fun ActiveRunScreen(
     state: ActiveRunState,
-    onAction: (ActiveRunAction) -> Unit,
-    onServiceToggled: (isServiceRunning: Boolean) -> Unit
+    onServiceToggle: (isServiceRunning: Boolean) -> Unit,
+    onAction: (ActiveRunAction) -> Unit
 ) {
     val context = LocalContext.current
     val permissionLauncher = rememberLauncherForActivityResult(
@@ -149,13 +148,13 @@ private fun ActiveRunScreen(
 
     LaunchedEffect(key1 = state.isRunFinished) {
         if (state.isRunFinished) {
-            onServiceToggled(false)
+            onServiceToggle(false)
         }
     }
 
     LaunchedEffect(key1 = state.shouldTrack) {
-        if (context.hasLocationPermission() && state.shouldTrack && !ActiveRunServices.isServiceActive) {
-            onServiceToggled(true)
+        if (context.hasLocationPermission() && state.shouldTrack && !ActiveRunService.isServiceActive) {
+            onServiceToggle(true)
         }
     }
 
@@ -182,7 +181,7 @@ private fun ActiveRunScreen(
                 },
                 iconSize = 20.dp,
                 contentDescription = if (state.shouldTrack) {
-                    stringResource(id = R.string.running_is_paused)
+                    stringResource(id = R.string.pause_run)
                 } else {
                     stringResource(id = R.string.start_run)
                 }
@@ -203,7 +202,7 @@ private fun ActiveRunScreen(
                     stream.use {
                         bmp.compress(
                             Bitmap.CompressFormat.JPEG,
-                            100,
+                            80,
                             it
                         )
                     }
@@ -231,21 +230,21 @@ private fun ActiveRunScreen(
             },
             description = stringResource(id = R.string.resume_or_finish_run),
             primaryButtonAction = {
-                RuniqueActionButton(
-                    text = stringResource(id = R.string.resume),
-                    isLoading = false,
-                    onClick = {
-                        onAction(ActiveRunAction.onRusumeRunClicked)
-                    },
-                    modifier = Modifier.weight(1f)
-                )
-            },
-            secondaryButtonAction = {
                 RuniqueOutlinedActionButton(
                     text = stringResource(id = R.string.finish),
                     isLoading = state.isSavingRun,
                     onClick = {
                         onAction(ActiveRunAction.onFinishRunClicked)
+                    },
+                    modifier = Modifier.weight(1f)
+                )
+            },
+            secondaryButtonAction = {
+                RuniqueActionButton(
+                    text = stringResource(id = R.string.resume),
+                    isLoading = false,
+                    onClick = {
+                        onAction(ActiveRunAction.onRusumeRunClicked)
                     },
                     modifier = Modifier.weight(1f)
                 )
@@ -279,7 +278,7 @@ private fun ActiveRunScreen(
                         permissionLauncher.requestRuniquePermissions(context)
                     },
                 )
-            },
+            }
         )
     }
 }
@@ -307,3 +306,4 @@ private fun ActivityResultLauncher<Array<String>>.requestRuniquePermissions(
         !hasNotificationPermission -> launch(notificationPermission)
     }
 }
+

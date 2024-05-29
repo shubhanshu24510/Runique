@@ -11,7 +11,7 @@ import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
-import com.shubhans.core.domain.location.LocationWIthAltitute
+import com.shubhans.core.domain.location.LocationWAltitude
 import com.shubhans.run.domain.LocationObserver
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.delay
@@ -22,7 +22,7 @@ class AndroidLocationObserver(
     private val context: Context
 ) : LocationObserver {
     private val client = LocationServices.getFusedLocationProviderClient(context)
-    override fun observerLocation(interval: Long): Flow<LocationWIthAltitute> {
+    override fun observerLocation(interval: Long): Flow<LocationWAltitude> {
         return callbackFlow {
             val locationManager = context.getSystemService<LocationManager>()!!
             var isGpsEnabled = false

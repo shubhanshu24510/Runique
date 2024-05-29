@@ -3,11 +3,12 @@ package com.shubhans.run.presentation.run_active.maps
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.core.graphics.ColorUtils
-import com.shubhans.core.domain.location.LoactionTimeStamp
+import com.shubhans.core.domain.location.Location
+import com.shubhans.core.domain.location.LocationTimeStamp
 import kotlin.math.abs
 
 object PolyLineColorCalculator {
-    fun locationToColor(locations1: LoactionTimeStamp, locations2: LoactionTimeStamp): Color {
+    fun locationToColor(locations1: LocationTimeStamp, locations2: LocationTimeStamp): Color {
         val differenceMeters = locations1.location.location.distanceTo(
             locations2.location.location
         )

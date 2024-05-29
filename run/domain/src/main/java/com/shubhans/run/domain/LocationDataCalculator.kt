@@ -1,11 +1,11 @@
 package com.shubhans.run.domain
 
-import com.shubhans.core.domain.location.LoactionTimeStamp
+import com.shubhans.core.domain.location.LocationTimeStamp
 import kotlin.math.roundToInt
 import kotlin.time.DurationUnit
 
 object LocationDataCalculator {
-    fun getTotalDistanceMeters(locations: List<List<LoactionTimeStamp>>): Int {
+    fun getTotalDistanceMeters(locations: List<List<LocationTimeStamp>>): Int {
         return locations
             .sumOf { timestampsPerLine ->
                 timestampsPerLine.zipWithNext { location1, location2 ->
@@ -14,7 +14,7 @@ object LocationDataCalculator {
             }
     }
 
-    fun getMaxSpeedKmh(locations: List<List<LoactionTimeStamp>>): Double {
+    fun getMaxSpeedKmh(locations: List<List<LocationTimeStamp>>): Double {
         return locations.maxOf { locationSet ->
             locationSet.zipWithNext { location1, location2 ->
                 val distance =
@@ -31,7 +31,7 @@ object LocationDataCalculator {
 
         }
     }
-    fun getTotalElevationMeters(locations: List<List<LoactionTimeStamp>>): Int {
+    fun getTotalElevationMeters(locations: List<List<LocationTimeStamp>>): Int {
         return locations.sumOf { timestampsPerLine ->
             timestampsPerLine.zipWithNext { location1, location2 ->
                 val altitute1 = location2.location.altitude

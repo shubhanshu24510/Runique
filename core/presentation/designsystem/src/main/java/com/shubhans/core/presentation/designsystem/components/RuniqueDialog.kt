@@ -33,9 +33,9 @@ fun RuniqueDialog(
     Dialog(onDismissRequest = onDismiss) {
         Column(
             modifier = modifier
-                .padding(16.dp)
-                .background(MaterialTheme.colorScheme.surface)
-                .clip(RoundedCornerShape(16.dp)),
+                .clip(RoundedCornerShape(15.dp))
+                    .background(MaterialTheme.colorScheme.surface)
+                    .padding(15.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

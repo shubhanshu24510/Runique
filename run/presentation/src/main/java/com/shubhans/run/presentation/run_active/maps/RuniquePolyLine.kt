@@ -5,11 +5,11 @@ import androidx.compose.runtime.remember
 import com.google.android.gms.maps.model.JointType
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.Polyline
-import com.shubhans.core.domain.location.LoactionTimeStamp
+import com.shubhans.core.domain.location.LocationTimeStamp
 
 @Composable
 fun RuniquePolyLine(
-    locations: List<List<LoactionTimeStamp>>
+    locations: List<List<LocationTimeStamp>>
 ) {
     val polyline = remember(locations) {
         locations.map {

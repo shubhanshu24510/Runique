@@ -28,5 +28,6 @@
     <string name="max_speed">Max Speed</string>
     <string name="totel_elevation">Total Elevation</string>
     <string name="delete">Delete</string>
+    <string name="pause_run">Pause Run</string>
 
 </resources>

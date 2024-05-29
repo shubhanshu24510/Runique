@@ -25,6 +25,7 @@ class RunOverViewViewModel(
         }.launchIn(viewModelScope)
 
         viewModelScope.launch {
+            repository.syncPendingRuns()
             repository.fetchRuns()
         }
     }
@@ -38,7 +39,6 @@ class RunOverViewViewModel(
                 viewModelScope.launch {
                     repository.deleteRun(action.runUi.id)
                 }
-
             }
         }
     }
