@@ -1,7 +1,8 @@
 @file:OptIn(
     ExperimentalMaterial3Api::class,
     ExperimentalMaterial3Api::class,
-    ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class
+    ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class,
+    ExperimentalMaterial3Api::class
 )
 
 package com.shubhans.run.presentation.run_overView
@@ -40,11 +41,14 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun RunOverViewScreenRoot(
-    onStartRunClicked: () -> Unit, viewViewModel: RunOverViewViewModel = koinViewModel()
+    onStartRunClicked: () -> Unit,
+    onLogOutClicked: () -> Unit,
+    viewViewModel: RunOverViewViewModel = koinViewModel()
 ) {
     RunOverViewScreen(state = viewViewModel.state, onAction = { action ->
         when (action) {
             RunOverviewAction.onRunClicked -> onStartRunClicked()
+            RunOverviewAction.onLogOutClicked -> onLogOutClicked()
             else -> Unit
         }
         viewViewModel.onAction(action)
