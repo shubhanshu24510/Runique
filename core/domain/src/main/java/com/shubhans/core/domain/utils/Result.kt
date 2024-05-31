@@ -10,7 +10,6 @@ inline fun <T, E : Error, R> Result<T, E>.map(map: (T) -> R): Result<R, E> {
         is Result.Error -> Result.Error(this.error)
         is Result.Success -> Result.Success(map(this.data))
     }
-
 }
 
 fun <T, E : Error> Result<T, E>.asEmptyDataResult(): EmptyResult<E> {

@@ -8,6 +8,7 @@ import com.shubhans.core.domain.run.RemoteDataSource
 import com.shubhans.core.domain.run.Run
 import com.shubhans.core.domain.run.RunId
 import com.shubhans.core.domain.run.RunRepository
+import com.shubhans.core.domain.run.SyncRunScheduler
 import com.shubhans.core.domain.utils.DataError
 import com.shubhans.core.domain.utils.EmptyResult
 import com.shubhans.core.domain.utils.Result
@@ -24,7 +25,8 @@ class OfflineFirstRunRepository(
     private val remoteDataSource: RemoteDataSource,
     private val applicationScope: CoroutineScope,
     private val runPendingSyncDao: RunPendingSyncDao,
-    private val sessionStorage: SessionStorage
+    private val sessionStorage: SessionStorage,
+    private val syncRunScheduler: SyncRunScheduler
 ) : RunRepository {
     override fun getRuns(): Flow<List<Run>> {
         return localDataSource.getRuns()
@@ -55,7 +57,12 @@ class OfflineFirstRunRepository(
         )
         return when (remoteResult) {
             is Result.Error -> {
-                Result.Success(Unit)
+                syncRunScheduler.scheduleSync(
+                        SyncRunScheduler.SyncType.CreateRuns(
+                            run = runWithId, mapPictureByte = mapPicture
+                        )
+                    )
+                remoteResult.asEmptyDataResult()
             }
 
             is Result.Success -> {
@@ -76,6 +83,16 @@ class OfflineFirstRunRepository(
         val remoteResult = applicationScope.async {
             remoteDataSource.deteleRun(id)
         }.await()
+
+        if (remoteResult is Result.Error) {
+            applicationScope.launch {
+                syncRunScheduler.scheduleSync(
+                        SyncRunScheduler.SyncType.DeleteSync(
+                            runId = id
+                        )
+                    )
+            }.join()
+        }
     }
 
     override suspend fun syncPendingRuns() {
@@ -88,9 +105,7 @@ class OfflineFirstRunRepository(
                 runPendingSyncDao.getAllRunPendingSyncsEntities(userId)
             }
 
-            val createJobs = createdRuns
-                .await()
-                .map {
+            val createJobs = createdRuns.await().map {
                     launch {
                         val run = it.run.toRun()
                         when (remoteDataSource.PostRun(run, it.mapPictureUrl)) {
@@ -103,9 +118,7 @@ class OfflineFirstRunRepository(
                         }
                     }
                 }
-            val deletedJobs = deleteRuns
-                .await()
-                .map {
+            val deletedJobs = deleteRuns.await().map {
                     launch {
                         when (remoteDataSource.deteleRun(it.run.id)) {
                             is Result.Error -> Unit

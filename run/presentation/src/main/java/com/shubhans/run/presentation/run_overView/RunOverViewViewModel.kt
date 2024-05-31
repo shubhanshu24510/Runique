@@ -7,18 +7,27 @@ import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shubhans.core.domain.run.RunRepository
+import com.shubhans.core.domain.run.SyncRunScheduler
 import com.shubhans.run.presentation.run_overView.mapper.toRunUi
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.minutes
 
 class RunOverViewViewModel(
-    val repository: RunRepository
+    private val repository: RunRepository, private val syncRunScheduler: SyncRunScheduler
 ) : ViewModel() {
     var state by mutableStateOf(RunOverViewState())
         private set
 
     init {
+        viewModelScope.launch {
+            syncRunScheduler.scheduleSync(
+                SyncRunScheduler.SyncType.FetchRuns(
+                    30.minutes
+                )
+            )
+        }
         repository.getRuns().onEach { runs ->
             val runUi = runs.map { it.toRunUi() }
             state = state.copy(runs = runUi)
