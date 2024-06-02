@@ -22,7 +22,7 @@ class CreateRunWorker(
             pendingSyncDao.getRunPendingSyncsEntity(pendingRunId) ?: return Result.failure()
 
         val run = pendingRunEntity.run.toRun()
-        return when (val result = remoteDataSource.PostRun(run, pendingRunEntity.mapPictureUrl)) {
+        return when (val result = remoteDataSource.PostRun(run, pendingRunEntity.mapPictureBytes)) {
             is com.shubhans.core.domain.utils.Result.Error -> {
                 result.error.toWorkerResult()
             }

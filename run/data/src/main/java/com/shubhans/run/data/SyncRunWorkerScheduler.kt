@@ -56,7 +56,7 @@ class SyncRunWorkerScheduler(
         val pendingSyncEntity = RunPendingSyncEntity(
             run = run.toRunEntity(),
             userId = userId,
-            mapPictureUrl = mapPictureByte
+            mapPictureBytes = mapPictureByte
         )
         pendingSyncDao.upsertRunPendingSyncEntity(pendingSyncEntity)
 

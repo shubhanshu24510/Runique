@@ -47,18 +47,19 @@ class RunOverViewViewModel(
     fun onAction(action: RunOverviewAction) {
         when (action) {
             RunOverviewAction.onRunClicked -> Unit
-            RunOverviewAction.onAnalyticsClicked -> Unit
-            RunOverviewAction.onLogOutClicked -> logOut()
+            RunOverviewAction.onLogOutClicked -> logout()
             is RunOverviewAction.onDeleteRun -> {
                 viewModelScope.launch {
                     repository.deleteRun(action.runUi.id)
                 }
             }
+
+            RunOverviewAction.onAnalyticsClicked -> TODO()
         }
     }
 
-    private fun logOut() {
-        viewModelScope.launch {
+    private fun logout() {
+        applicationScope.launch {
             syncRunScheduler.cancelAllScheduledSync()
             repository.deleteAllRuns()
             repository.logout()

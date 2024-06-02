@@ -33,7 +33,7 @@ class OfflineFirstRunRepository(
     private val runPendingSyncDao: RunPendingSyncDao,
     private val sessionStorage: SessionStorage,
     private val syncRunScheduler: SyncRunScheduler,
-    private val httpClient: HttpClient
+    private val client: HttpClient
 ) : RunRepository {
     override fun getRuns(): Flow<List<Run>> {
         return localDataSource.getRuns()
@@ -60,7 +60,8 @@ class OfflineFirstRunRepository(
         }
         val runWithId = run.copy(id = localResult.data)
         val remoteResult = remoteDataSource.PostRun(
-            run = runWithId, mapPicture = mapPicture
+            run = runWithId,
+            mapPicture = mapPicture
         )
         return when (remoteResult) {
             is Result.Error -> {
@@ -115,7 +116,7 @@ class OfflineFirstRunRepository(
             val createJobs = createdRuns.await().map {
                 launch {
                     val run = it.run.toRun()
-                    when (remoteDataSource.PostRun(run, it.mapPictureUrl)) {
+                    when (remoteDataSource.PostRun(run, it.mapPictureBytes)) {
                         is Result.Error -> Unit
                         is Result.Success -> {
                             applicationScope.launch {
@@ -148,10 +149,10 @@ class OfflineFirstRunRepository(
     }
 
     override suspend fun logout(): EmptyResult<DataError.NetworkError> {
-        val result = httpClient.get<Unit>(
+        val result = client.get<Unit>(
             route = "/logout"
         ).asEmptyDataResult()
-        httpClient.plugin(Auth).providers.filterIsInstance<BearerAuthProvider>().firstOrNull()
+        client.plugin(Auth).providers.filterIsInstance<BearerAuthProvider>().firstOrNull()
             ?.clearToken()
         return result
     }

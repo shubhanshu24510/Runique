@@ -47,6 +47,6 @@ class RoomLocalRunDataSource(
     }
 
     override suspend fun deleteAllRuns() {
-        deleteAllRuns()
+        runDao.deleteAllRuns()
     }
 }

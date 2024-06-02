@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.shubhans.core.presentation.designsystem.AnalyticsIcon
 import com.shubhans.core.presentation.designsystem.LogoIcon
+import com.shubhans.core.presentation.designsystem.LogoutIcon
 import com.shubhans.core.presentation.designsystem.RunIcon
 import com.shubhans.core.presentation.designsystem.RuniqueTheme
 import com.shubhans.core.presentation.designsystem.components.DropDownMenuItem
@@ -71,7 +72,7 @@ fun RunOverViewScreen(
                 DropDownMenuItem(
                     title = stringResource(R.string.analytics), icon = AnalyticsIcon
                 ), DropDownMenuItem(
-                    title = stringResource(R.string.logout), icon = AnalyticsIcon
+                    title = stringResource(R.string.logout), icon = LogoutIcon
                 )
             ),
             onMenuItemClicked = { index ->
