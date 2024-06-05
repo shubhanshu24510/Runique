@@ -53,7 +53,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun RegisterScreenRoot(
     onSignInClick: () -> Unit,
-    onRegisterSucessfull: () -> Unit,
+    onRegisterSuccessful: () -> Unit,
     viewModel: RegisterViewModel = koinViewModel()
 ) {
     val context = LocalContext.current
@@ -66,7 +66,7 @@ fun RegisterScreenRoot(
                     context,
                     R.string.registration_sucesfull,
                     Toast.LENGTH_LONG).show()
-                onRegisterSucessfull()
+                onRegisterSuccessful()
             }
             is RegisterEvent.Error -> {
                 keyboardController?.hide()

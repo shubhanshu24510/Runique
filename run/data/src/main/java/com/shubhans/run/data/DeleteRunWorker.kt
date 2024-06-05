@@ -4,12 +4,12 @@ import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.shubhans.core.database.dto.RunPendingSyncDao
-import com.shubhans.core.domain.run.RemoteDataSource
+import com.shubhans.core.domain.run.RemoteRunDataSource
 
 class DeleteRunWorker(
     val context: Context,
     private val params: WorkerParameters,
-    private val remoteDataSource: RemoteDataSource,
+    private val remoteDataSource: RemoteRunDataSource,
     private val pendingSyncDao: RunPendingSyncDao
 ) : CoroutineWorker(context, params) {
     override suspend fun doWork(): Result {
@@ -17,7 +17,7 @@ class DeleteRunWorker(
             return Result.failure()
         }
         val runId = inputData.getString(RUN_ID) ?: return Result.failure()
-        return when (val result = remoteDataSource.deteleRun(runId)) {
+        return when (val result = remoteDataSource.deleteRun(runId)) {
             is com.shubhans.core.domain.utils.Result.Error -> {
                 result.error.toWorkerResult()
             }

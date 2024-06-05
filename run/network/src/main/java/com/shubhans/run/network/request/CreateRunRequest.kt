@@ -4,13 +4,13 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CreateRunRequest(
-    val id: String,
-    val durationMills: Long,
+    val durationMillis: Long,
     val distanceMeters: Int,
     val epochMillis: Long,
     val lat: Double,
     val long: Double,
     val avgSpeedKmh: Double,
     val maxSpeedKmh: Double,
-    val totalElavationMeters: Int
+    val totalElevationMeters: Int,
+    val id: String
 )

@@ -50,7 +50,7 @@ private fun NavGraphBuilder.authGraph(
                     }
                     restoreState = true
                 }
-            }, onRegisterSucessfull = {
+            }, onRegisterSuccessful = {
                 navController.navigate("login")
             })
         }

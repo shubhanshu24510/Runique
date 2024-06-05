@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
+@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class)
 
 package com.shubhans.run.presentation.run_active
 
@@ -21,12 +21,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.shubhans.core.presentation.designsystem.RuniqueTheme
 import com.shubhans.core.presentation.designsystem.StartIcon
 import com.shubhans.core.presentation.designsystem.StopIcon
 import com.shubhans.core.presentation.designsystem.components.ReuniqueToolbar
@@ -36,19 +33,16 @@ import com.shubhans.core.presentation.designsystem.components.RuniqueFloatingAct
 import com.shubhans.core.presentation.designsystem.components.RuniqueOutlinedActionButton
 import com.shubhans.core.presentation.designsystem.components.RuniqueScafflod
 import com.shubhans.core.presentation.ui.ObserverEvent
-import com.shubhans.run.domain.RunData
 import com.shubhans.run.presentation.R
 import com.shubhans.run.presentation.run_active.components.ActiveRunDataCard
 import com.shubhans.run.presentation.run_active.maps.TrackerMap
 import com.shubhans.run.presentation.run_active.services.ActiveRunService
-import com.shubhans.run.presentation.run_overView.components.RunDataItemCard
 import com.shubhans.run.presentation.utils.hasLocationPermission
 import com.shubhans.run.presentation.utils.hasNotificationPermission
 import com.shubhans.run.presentation.utils.shouldShowLocationPermissionRationale
 import com.shubhans.run.presentation.utils.shouldShowNotificationPermissionRationale
 import org.koin.androidx.compose.koinViewModel
 import java.io.ByteArrayOutputStream
-import kotlin.time.Duration.Companion.minutes
 
 @Composable
 fun ActiveRunScreenRoot(
@@ -142,7 +136,7 @@ private fun ActiveRunScreen(
         )
 
         if (!showLocationRationale && !showNotificationRationale) {
-            permissionLauncher.requestRuniquePermissions(context)
+            permissionLauncher.requestUniquePermissions(context)
         }
     }
 
@@ -275,7 +269,7 @@ private fun ActiveRunScreen(
                     isLoading = false,
                     onClick = {
                         onAction(ActiveRunAction.dismissRationalDialog)
-                        permissionLauncher.requestRuniquePermissions(context)
+                        permissionLauncher.requestUniquePermissions(context)
                     },
                 )
             }
@@ -283,7 +277,7 @@ private fun ActiveRunScreen(
     }
 }
 
-private fun ActivityResultLauncher<Array<String>>.requestRuniquePermissions(
+private fun ActivityResultLauncher<Array<String>>.requestUniquePermissions(
     context: Context
 ) {
     val hasLocationPermission = context.hasLocationPermission()
@@ -306,4 +300,3 @@ private fun ActivityResultLauncher<Array<String>>.requestRuniquePermissions(
         !hasNotificationPermission -> launch(notificationPermission)
     }
 }
-

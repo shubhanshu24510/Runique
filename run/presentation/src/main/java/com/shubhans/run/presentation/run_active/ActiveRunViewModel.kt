@@ -48,6 +48,7 @@ class ActiveRunViewModel(
     private val runningTracker: RunningTracker,
     private val runRepository: RunRepository
 ) : ViewModel() {
+
     var state by mutableStateOf(
         ActiveRunState(
             shouldTrack = ActiveRunService.isServiceActive && runningTracker.isTracking.value,
@@ -157,7 +158,6 @@ class ActiveRunViewModel(
                 finishRun(action.mapPictureBytes)
             }
 
-            else -> Unit
         }
     }
 
@@ -172,7 +172,7 @@ class ActiveRunViewModel(
             val run = Run(
                 id = null,
                 duration = state.elapsedTime,
-                dateTimeUTC = ZonedDateTime.now()
+                dateTimeUtc = ZonedDateTime.now()
                     .withZoneSameInstant(ZoneId.of("UTC")),
                 distanceMeters = state.runData.distanceMeters,
                 location = state.currentLocation ?: Location(0.0, 0.0),

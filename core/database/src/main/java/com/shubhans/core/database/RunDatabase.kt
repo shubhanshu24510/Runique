@@ -9,12 +9,15 @@ import com.shubhans.core.database.entity.RunEntity
 import com.shubhans.core.database.entity.RunPendingSyncEntity
 
 @Database(
-    entities = [RunEntity::class,
+    entities = [
+        RunEntity::class,
         RunPendingSyncEntity::class,
-        DeleteRunSyncEntity::class],
+        DeleteRunSyncEntity::class
+    ],
     version = 1
 )
 abstract class RunDatabase : RoomDatabase() {
-    abstract fun runDao(): RunDao
-    abstract fun runPendingSyncDao(): RunPendingSyncDao
+
+    abstract val runDao: RunDao
+    abstract val runPendingSyncDao: RunPendingSyncDao
 }

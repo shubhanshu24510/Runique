@@ -15,7 +15,15 @@ import java.sql.SQLDataException
 
 class RoomLocalRunDataSource(
     private val runDao: RunDao
-) : LocalRunDataSource {
+): LocalRunDataSource {
+
+    override fun getRuns(): Flow<List<Run>> {
+        return runDao.getRuns()
+            .map { runEntities ->
+                runEntities.map { it.toRun() }
+            }
+    }
+
     override suspend fun upsertRun(run: Run): Result<RunId, DataError.LocalError> {
         return try {
             val entity = run.toRunEntity()
@@ -36,14 +44,8 @@ class RoomLocalRunDataSource(
         }
     }
 
-    override  fun getRuns(): Flow<List<Run>> {
-        return runDao.getRuns().map { runs ->
-                runs.map { it.toRun() }
-            }
-    }
-
     override suspend fun deleteRun(id: String) {
-        runDao.deleteRun(id = id)
+        runDao.deleteRun(id)
     }
 
     override suspend fun deleteAllRuns() {

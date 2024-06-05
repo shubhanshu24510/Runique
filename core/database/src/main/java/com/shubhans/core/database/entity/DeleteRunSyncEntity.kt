@@ -6,5 +6,6 @@ import androidx.room.PrimaryKey
 @Entity
 data class DeleteRunSyncEntity(
     @PrimaryKey(autoGenerate = false)
-    val userId: String, val runId: String
+    val userId: String,
+    val runId: String
 )

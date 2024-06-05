@@ -12,7 +12,8 @@ fun RunDto.toRun(): Run {
     return Run(
         id = id,
         duration = durationMillis.milliseconds,
-        dateTimeUTC = Instant.parse(dateTimeUtc).atZone(ZoneId.of("UTC")),
+        dateTimeUtc = Instant.parse(dateTimeUtc)
+            .atZone(ZoneId.of("UTC")),
         distanceMeters = distanceMeters,
         location = Location(lat, long),
         maxSpeedKmh = maxSpeedKmh,
@@ -24,13 +25,13 @@ fun RunDto.toRun(): Run {
 fun Run.toCreateRunRequest(): CreateRunRequest {
     return CreateRunRequest(
         id = id!!,
-        durationMills = duration.inWholeMicroseconds,
+        durationMillis = duration.inWholeMilliseconds,
         distanceMeters = distanceMeters,
-        epochMillis =  dateTimeUTC.toEpochSecond() * 1000L,
         lat = location.lat,
         long = location.long,
         avgSpeedKmh = avgSpeedKmh,
         maxSpeedKmh = maxSpeedKmh,
-        totalElavationMeters = totalElevationMeters
+        totalElevationMeters = totalElevationMeters,
+        epochMillis = dateTimeUtc.toEpochSecond() * 1000L
     )
 }

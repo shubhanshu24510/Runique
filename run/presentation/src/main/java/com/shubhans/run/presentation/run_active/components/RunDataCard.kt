@@ -21,9 +21,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.shubhans.core.presentation.designsystem.RuniqueTheme
 import com.shubhans.core.presentation.ui.formatted
-import com.shubhans.run.domain.RunData
-import com.shubhans.core.presentation.ui.toFormattedKms
+import com.shubhans.core.presentation.ui.toFormattedKmh
 import com.shubhans.core.presentation.ui.toFormattedPace
+import com.shubhans.run.domain.RunData
 import com.shubhans.run.presentation.R
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
@@ -53,7 +53,7 @@ fun ActiveRunDataCard(
         ) {
             RunDataItem(
                 title = stringResource(id = R.string.distance),
-                value = (runData.distanceMeters / 1000.0).toFormattedKms(),
+                value = (runData.distanceMeters / 1000.0).toFormattedKmh(),
                 modifier = Modifier.defaultMinSize(minWidth = 75.dp)
             )
             RunDataItem(

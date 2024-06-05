@@ -12,7 +12,7 @@ import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.kotlin
 
-class AndroidRoomConventionPlugin: Plugin<Project> {
+class AndroidRoomConventionPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         target.run {
@@ -20,11 +20,9 @@ class AndroidRoomConventionPlugin: Plugin<Project> {
                 apply("androidx.room")
                 apply("com.google.devtools.ksp")
             }
-
             extensions.configure<RoomExtension> {
                 schemaDirectory("$projectDir/schemas")
             }
-
             dependencies {
                 "implementation"(libs.findLibrary("room.runtime").get())
                 "implementation"(libs.findLibrary("room.ktx").get())

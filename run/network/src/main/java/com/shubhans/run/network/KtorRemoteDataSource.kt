@@ -1,9 +1,10 @@
 package com.shubhans.run.network
 
+import com.shubhans.core.data.networking.constructRoute
 import com.shubhans.core.data.networking.delete
 import com.shubhans.core.data.networking.get
 import com.shubhans.core.data.networking.safeCall
-import com.shubhans.core.domain.run.RemoteDataSource
+import com.shubhans.core.domain.run.RemoteRunDataSource
 import com.shubhans.core.domain.run.Run
 import com.shubhans.core.domain.utils.DataError
 import com.shubhans.core.domain.utils.EmptyResult
@@ -24,42 +25,47 @@ import io.ktor.http.headers
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
-class KtorRemoteDataSource(
+class KtorRemoteRunDataSource(
     private val httpClient: HttpClient
-) : RemoteDataSource {
+) : RemoteRunDataSource {
+
     override suspend fun getRuns(): Result<List<Run>, DataError.NetworkError> {
         return httpClient.get<List<RunDto>>(
-            route = "/runs"
-        ).map { runDtoList ->
-            runDtoList.map { it.toRun() }
+            route = "/runs",
+        ).map { runDtos ->
+            runDtos.map { it.toRun() }
         }
     }
 
-    override suspend fun PostRun(
+    override suspend fun postRun(
         run: Run, mapPicture: ByteArray
     ): Result<Run, DataError.NetworkError> {
-        val createRunRequest =
+        val createRunRequestJson =
             kotlinx.serialization.json.Json.encodeToString(run.toCreateRunRequest())
         val result = safeCall<RunDto> {
-            httpClient.submitFormWithBinaryData(url = "/run", formData = formData {
+            httpClient.submitFormWithBinaryData(url = constructRoute("/run"), formData = formData {
                 append("MAP_PICTURE", mapPicture, Headers.build {
                     append(HttpHeaders.ContentType, "image/jpeg")
-                    append(HttpHeaders.ContentDisposition, "filename=mappicture.jpeg")
+                    append(HttpHeaders.ContentDisposition, "filename=mappicture.jpg")
                 })
-                append("RUN_DATA", createRunRequest, Headers.build {
+                append("RUN_DATA", createRunRequestJson, Headers.build {
                     append(HttpHeaders.ContentType, "text/plain")
-                    append(HttpHeaders.ContentDisposition, "form-data; name=RUN_DATA")
+                    append(HttpHeaders.ContentDisposition, "form-data; name=\"RUN_DATA\"")
                 })
             }) {
                 method = HttpMethod.Post
             }
         }
-        return result.map { it.toRun() }
+        return result.map {
+            it.toRun()
+        }
     }
 
-    override suspend fun deteleRun(id: String): EmptyResult<DataError.NetworkError> {
+    override suspend fun deleteRun(id: String): EmptyResult<DataError.NetworkError> {
         return httpClient.delete(
-            route = "/run", queryParameters = mapOf("id" to id)
+            route = "/run", queryParameters = mapOf(
+                "id" to id
+            )
         )
     }
 }

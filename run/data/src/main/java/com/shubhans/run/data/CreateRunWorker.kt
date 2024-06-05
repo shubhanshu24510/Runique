@@ -5,12 +5,12 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.shubhans.core.database.dto.RunPendingSyncDao
 import com.shubhans.core.database.mappers.toRun
-import com.shubhans.core.domain.run.RemoteDataSource
+import com.shubhans.core.domain.run.RemoteRunDataSource
 
 class CreateRunWorker(
     val context: Context,
     private val params: WorkerParameters,
-    private val remoteDataSource: RemoteDataSource,
+    private val remoteDataSource: RemoteRunDataSource,
     private val pendingSyncDao: RunPendingSyncDao
 ) : CoroutineWorker(context, params) {
     override suspend fun doWork(): Result {
@@ -22,7 +22,7 @@ class CreateRunWorker(
             pendingSyncDao.getRunPendingSyncsEntity(pendingRunId) ?: return Result.failure()
 
         val run = pendingRunEntity.run.toRun()
-        return when (val result = remoteDataSource.PostRun(run, pendingRunEntity.mapPictureBytes)) {
+        return when (val result = remoteDataSource.postRun(run, pendingRunEntity.mapPictureBytes)) {
             is com.shubhans.core.domain.utils.Result.Error -> {
                 result.error.toWorkerResult()
             }
