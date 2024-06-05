@@ -31,6 +31,10 @@ gradlePlugin {
             id = "runique.android.library.compose"
             implementationClass = "AndroidLibraryComposeConventionPlugin"
         }
+        register("androidDynamicFeature") {
+            id = "runique.android.dynamic.feature"
+            implementationClass = "AndroidDynamicsFeaturesConventionPlugin"
+        }
         register("androidFeatureUi") {
             id = "runique.android.feature.ui"
             implementationClass = "AndroidFeatureUiConventionPlugin"
