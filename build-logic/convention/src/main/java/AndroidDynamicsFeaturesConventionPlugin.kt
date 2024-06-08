@@ -32,7 +32,6 @@ class AndroidDynamicsFeaturesConventionPlugin : Plugin<Project> {
             dependencies {
                 addUiLayerDependencies(target)
                 "testImplementation"(kotlin("test"))
-
             }
         }
     }

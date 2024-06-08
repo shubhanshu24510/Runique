@@ -6,6 +6,8 @@ import org.bson.types.ObjectId
 
 @Entity
 data class RunEntity(
+    @PrimaryKey(autoGenerate = false)
+    val id: String = ObjectId().toHexString(),
     val durationMillis: Long,
     val distanceMeters: Int,
     val dateTimeUtc: String,
@@ -15,6 +17,4 @@ data class RunEntity(
     val maxSpeedKmh: Double,
     val totalElevationMeters: Int,
     val mapPictureUrl: String?,
-    @PrimaryKey(autoGenerate = false)
-    val id: String = ObjectId().toHexString()
 )

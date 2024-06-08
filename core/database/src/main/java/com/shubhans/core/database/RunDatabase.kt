@@ -2,6 +2,7 @@ package com.shubhans.core.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import com.shubhans.core.database.dto.AnalyticsDao
 import com.shubhans.core.database.dto.RunDao
 import com.shubhans.core.database.dto.RunPendingSyncDao
 import com.shubhans.core.database.entity.DeleteRunSyncEntity
@@ -17,7 +18,7 @@ import com.shubhans.core.database.entity.RunPendingSyncEntity
     version = 1
 )
 abstract class RunDatabase : RoomDatabase() {
-
     abstract val runDao: RunDao
-    abstract val runPendingSyncDao: RunPendingSyncDao
+    abstract val runPendingSyncDao:RunPendingSyncDao
+    abstract val analyticsDao: AnalyticsDao
 }

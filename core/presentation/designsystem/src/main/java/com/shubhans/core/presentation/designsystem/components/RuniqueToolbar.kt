@@ -41,7 +41,7 @@ import com.shubhans.core.presentation.designsystem.R
 import com.shubhans.core.presentation.designsystem.RuniqueTheme
 
 @Composable
-fun ReuniqueToolbar(
+fun RuniqueToolbar(
     showBackButton: Boolean,
     title: String,
     modifier: Modifier = Modifier,
@@ -119,27 +119,4 @@ fun ReuniqueToolbar(
             }
         }
     )
-}
-
-@Preview
-@Composable
-private fun PreviewReuniqueTopTool() {
-    RuniqueTheme {
-        ReuniqueToolbar(
-            showBackButton = true,
-            title = "Runique",
-            menuItems = listOf(
-                DropDownMenuItem(
-                    title = "Analitics",
-                    icon = AnalyticsIcon
-                ),
-                DropDownMenuItem(
-                    title = "Logout",
-                    icon = LogoutIcon
-                ),
-            ),
-            onMenuItemClicked = { /* Handle menu item click */ },
-            onBackClicked = { /* Handle back click */ }
-        )
-    }
 }

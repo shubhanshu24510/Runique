@@ -23,7 +23,7 @@ class DeleteRunWorker(
             }
 
             is com.shubhans.core.domain.utils.Result.Success -> {
-                pendingSyncDao.deleteDeleteRunSyncEntity(runId)
+                pendingSyncDao.deleteDeletedRunSyncEntity(runId)
                 Result.success()
             }
         }

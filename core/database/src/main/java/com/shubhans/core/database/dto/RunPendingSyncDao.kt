@@ -9,28 +9,28 @@ import com.shubhans.core.database.entity.RunPendingSyncEntity
 
 @Dao
 interface RunPendingSyncDao {
-    //created SyncDao to handle the sync operations
-    @Query("SELECT * FROM runpendingsyncentity WHERE userId = :userId")
-    suspend fun getAllRunPendingSyncsEntities(userId: String): List<RunPendingSyncEntity>
+    // CREATED RUNS
+    @Query("SELECT * FROM runpendingsyncentity WHERE userId=:userId")
+    suspend fun getAllRunPendingSyncEntities(userId: String): List<RunPendingSyncEntity>
 
-    @Query("SELECT * FROM runpendingsyncentity WHERE runId = :runId")
-    suspend fun getRunPendingSyncsEntity(runId: String): RunPendingSyncEntity?
+    @Query("SELECT * FROM runpendingsyncentity WHERE runId=:runId")
+    suspend fun getRunPendingSyncEntity(runId: String): RunPendingSyncEntity?
 
     @Upsert
     suspend fun upsertRunPendingSyncEntity(entity: RunPendingSyncEntity)
 
-    @Query("DELETE  FROM runpendingsyncentity WHERE runId = :runId")
+    @Query("DELETE FROM runpendingsyncentity WHERE runId=:runId")
     suspend fun deleteRunPendingSyncEntity(runId: String)
 
-    //deleted syncopal to handle the sync operations
+    // DELETED RUNS
 
-    @Query("SELECT * FROM runpendingsyncentity WHERE userId = :userId")
-    suspend fun getAllDeleteRunSyncEntities(userId: String): List<DeleteRunSyncEntity>
+    @Query("SELECT * FROM deleterunsyncentity WHERE userId=:userId")
+    suspend fun getAllDeletedRunSyncEntities(userId: String): List<DeleteRunSyncEntity>
 
     @Upsert
-    suspend fun upsertDeleteRunSyncEntity(entity: DeleteRunSyncEntity)
+    suspend fun upsertDeletedRunSyncEntity(entity: DeleteRunSyncEntity)
 
-    @Query("DELETE  FROM runpendingsyncentity WHERE runId = :runId")
-    suspend fun deleteDeleteRunSyncEntity(runId: String)
+    @Query("DELETE FROM deleterunsyncentity WHERE runId=:runId")
+    suspend fun deleteDeletedRunSyncEntity(runId: String)
 }
 

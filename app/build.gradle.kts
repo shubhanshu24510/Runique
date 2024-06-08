@@ -1,5 +1,5 @@
 plugins {
-   alias(libs.plugins.runique.android.application.compose)
+    alias(libs.plugins.runique.android.application.compose)
     alias(libs.plugins.runique.jvm.ktor)
 }
 
@@ -17,7 +17,7 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-    dynamicFeatures += setOf(":analyticss:analytics-features", ":analyticss:analytics-feature")
+    dynamicFeatures += setOf(":analyticss:analytics_features")
 }
 
 dependencies {

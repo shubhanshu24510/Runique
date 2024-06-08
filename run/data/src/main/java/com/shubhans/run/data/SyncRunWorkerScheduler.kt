@@ -86,7 +86,7 @@ class SyncRunWorkerScheduler(
         val entity = DeleteRunSyncEntity(
             userId = userId, runId = runId
         )
-        pendingSyncDao.upsertDeleteRunSyncEntity(entity)
+        pendingSyncDao.upsertDeletedRunSyncEntity(entity)
 
         val workRequest =
             OneTimeWorkRequestBuilder<DeleteRunWorker>().addTag("delete_work").setConstraints(

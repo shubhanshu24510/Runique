@@ -25,18 +25,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.lazy.items
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.shubhans.core.presentation.designsystem.AnalyticsIcon
 import com.shubhans.core.presentation.designsystem.LogoIcon
 import com.shubhans.core.presentation.designsystem.LogoutIcon
 import com.shubhans.core.presentation.designsystem.RunIcon
 import com.shubhans.core.presentation.designsystem.RuniqueTheme
 import com.shubhans.core.presentation.designsystem.components.DropDownMenuItem
-import com.shubhans.core.presentation.designsystem.components.ReuniqueToolbar
 import com.shubhans.core.presentation.designsystem.components.RuniqueFloatingActionButton
 import com.shubhans.core.presentation.designsystem.components.RuniqueScafflod
+import com.shubhans.core.presentation.designsystem.components.RuniqueToolbar
 import com.shubhans.run.presentation.R
-import com.shubhans.run.presentation.run_active.components.RunDataItem
 import com.shubhans.run.presentation.run_overView.components.RunDataItemCard
 import org.koin.androidx.compose.koinViewModel
 
@@ -44,10 +42,12 @@ import org.koin.androidx.compose.koinViewModel
 fun RunOverViewScreenRoot(
     onStartRunClicked: () -> Unit,
     onLogOutClicked: () -> Unit,
+    onAnalyticsClicked: () -> Unit,
     viewViewModel: RunOverViewViewModel = koinViewModel()
 ) {
     RunOverViewScreen(state = viewViewModel.state, onAction = { action ->
         when (action) {
+            RunOverviewAction.onAnalyticsClicked -> onAnalyticsClicked()
             RunOverviewAction.onRunClicked -> onStartRunClicked()
             RunOverviewAction.onLogOutClicked -> onLogOutClicked()
             else -> Unit
@@ -65,7 +65,7 @@ fun RunOverViewScreen(
         state = topAppBarState,
     )
     RuniqueScafflod(topAppBarToolbar = {
-        ReuniqueToolbar(showBackButton = false,
+        RuniqueToolbar(showBackButton = false,
             title = stringResource(R.string.runique),
             scrollBehavior = scrollBehavior,
             menuItems = listOf(

@@ -19,7 +19,7 @@ class CreateRunWorker(
         }
         val pendingRunId = inputData.getString(RUN_ID) ?: return Result.failure()
         val pendingRunEntity =
-            pendingSyncDao.getRunPendingSyncsEntity(pendingRunId) ?: return Result.failure()
+            pendingSyncDao.getRunPendingSyncEntity(pendingRunId) ?: return Result.failure()
 
         val run = pendingRunEntity.run.toRun()
         return when (val result = remoteDataSource.postRun(run, pendingRunEntity.mapPictureBytes)) {

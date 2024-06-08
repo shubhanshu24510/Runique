@@ -54,7 +54,7 @@ class RunOverViewViewModel(
                 }
             }
 
-            RunOverviewAction.onAnalyticsClicked -> TODO()
+            RunOverviewAction.onAnalyticsClicked -> Unit
         }
     }
 

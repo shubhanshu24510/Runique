@@ -191,7 +191,7 @@ fun RegisterScreen(
 
 @Composable
 fun PasswordRequirement(
-    text: String, isValid: Boolean, modifier: Modifier = Modifier
+    text: String, isValid: Boolean
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),

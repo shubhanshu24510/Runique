@@ -88,7 +88,7 @@ class OfflineFirstRunRepository(
         // Edge case where the run is created in offline-mode,
         // and then deleted in offline-mode as well. In that case,
         // we don't need to sync anything.
-        val isPendingSync = runPendingSyncDao.getRunPendingSyncsEntity(id) != null
+        val isPendingSync = runPendingSyncDao.getRunPendingSyncEntity(id) != null
         if (isPendingSync) {
             runPendingSyncDao.deleteRunPendingSyncEntity(id)
             return
@@ -112,10 +112,10 @@ class OfflineFirstRunRepository(
             val userId = sessionStorage.get()?.userId ?: return@withContext
 
             val createdRuns = async {
-                runPendingSyncDao.getAllRunPendingSyncsEntities(userId)
+                runPendingSyncDao.getAllRunPendingSyncEntities(userId)
             }
             val deletedRuns = async {
-                runPendingSyncDao.getAllDeleteRunSyncEntities(userId)
+                runPendingSyncDao.getAllDeletedRunSyncEntities(userId)
             }
 
             val createJobs = createdRuns.await().map {
@@ -137,7 +137,7 @@ class OfflineFirstRunRepository(
                         is Result.Error -> Unit
                         is Result.Success -> {
                             applicationScope.launch {
-                                runPendingSyncDao.deleteDeleteRunSyncEntity(it.runId)
+                                runPendingSyncDao.deleteDeletedRunSyncEntity(it.runId)
                             }.join()
                         }
                     }
@@ -160,7 +160,6 @@ class OfflineFirstRunRepository(
 
         client.plugin(Auth).providers.filterIsInstance<BearerAuthProvider>().firstOrNull()
             ?.clearToken()
-
         return result
     }
 }

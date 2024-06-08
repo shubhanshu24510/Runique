@@ -2,4 +2,7 @@
     <string name="app_name">Runique</string>
     <string name="title_analytics_features">Analytics</string>
     <string name="title_analytics_feature">Analytics</string>
+    <string name="error_installing_analytics_features">Error install analytics features.</string>
+    <string name="installed_analytics_features">Sucessfully installed analytics Feature.</string>
+    <string name="installing_analytics_features">Installing Analytics Features</string>
 </resources>

@@ -12,21 +12,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.shubhans.core.presentation.designsystem.RunIcon
-import com.shubhans.core.presentation.designsystem.RuniqueGreen
-import com.shubhans.core.presentation.designsystem.RuniqueGreen30
 
 @Composable
 fun RuniqueFloatingActionButton(
     icon: ImageVector,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier,
     contentDescription: String? = null,
     iconSize: Dp = 25.dp
 ) {
@@ -62,7 +57,6 @@ private fun PreviewRuniqueFloatingActionButton() {
     RuniqueFloatingActionButton(
         icon = RunIcon,
         onClick = {},
-        contentDescription = "Add",
-        modifier = Modifier.padding(16.dp)
+        contentDescription = "Add"
     )
 }

@@ -22,7 +22,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/analyticss" />
-            <option value="$PROJECT_DIR$/analyticss/analytics-feature" />
+            <option value="$PROJECT_DIR$/analyticss/analytics_features" />
             <option value="$PROJECT_DIR$/analyticss/data" />
             <option value="$PROJECT_DIR$/analyticss/domain" />
             <option value="$PROJECT_DIR$/analyticss/presentation" />

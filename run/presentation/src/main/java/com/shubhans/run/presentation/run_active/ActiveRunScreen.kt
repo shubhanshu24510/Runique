@@ -26,12 +26,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.shubhans.core.presentation.designsystem.StartIcon
 import com.shubhans.core.presentation.designsystem.StopIcon
-import com.shubhans.core.presentation.designsystem.components.ReuniqueToolbar
 import com.shubhans.core.presentation.designsystem.components.RuniqueActionButton
 import com.shubhans.core.presentation.designsystem.components.RuniqueDialog
 import com.shubhans.core.presentation.designsystem.components.RuniqueFloatingActionButton
 import com.shubhans.core.presentation.designsystem.components.RuniqueOutlinedActionButton
 import com.shubhans.core.presentation.designsystem.components.RuniqueScafflod
+import com.shubhans.core.presentation.designsystem.components.RuniqueToolbar
 import com.shubhans.core.presentation.ui.ObserverEvent
 import com.shubhans.run.presentation.R
 import com.shubhans.run.presentation.run_active.components.ActiveRunDataCard
@@ -155,7 +155,7 @@ private fun ActiveRunScreen(
     RuniqueScafflod(
         withGradient = false,
         topAppBarToolbar = {
-            ReuniqueToolbar(
+            RuniqueToolbar(
                 showBackButton = true,
                 title = stringResource(id = R.string.active_run),
                 onBackClicked = {
@@ -173,12 +173,12 @@ private fun ActiveRunScreen(
                 onClick = {
                     onAction(ActiveRunAction.onToggleRunClicked)
                 },
-                iconSize = 20.dp,
                 contentDescription = if (state.shouldTrack) {
                     stringResource(id = R.string.pause_run)
                 } else {
                     stringResource(id = R.string.start_run)
-                }
+                },
+                iconSize = 20.dp
             )
         }
     ) { padding ->

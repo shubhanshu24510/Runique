@@ -5,6 +5,7 @@
       <module name="Runique.analytics.domain.main" target="17" />
       <module name="Runique.analytics.domain.test" target="17" />
       <module name="Runique.analyticss.analytics-features" target="17" />
+      <module name="Runique.analyticss.analytics_feature" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>
