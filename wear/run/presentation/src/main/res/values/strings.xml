@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="Heart_rate">Heart rate</string>
+    <string name="distance">Distance</string>
+    <string name="unsupported">Unsupported</string>
+    <string name="pause">Pause Icon</string>
+    <string name="start">Start Icon</string>
+    <string name="ExclamationMarkIcon">ExclamationMarkIcon</string>
+    <string name="no_phone_nearby">This app requires the Runique phone app to be installed and connected.</string>
+    <string name="onen_runique_screen">Please open the new run screen on your phone to get started.</string>
+</resources>

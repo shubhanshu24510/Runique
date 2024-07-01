@@ -40,6 +40,9 @@ fun Double.toFormattedKmh(): String {
 fun Int.toFormattedMeters(): String {
     return "$this m"
 }
+fun Int?.formattedHeartRate(): String {
+    return if(this != null) "$this bpm" else "_"
+}
 
 private fun Double.roundToDecimals(decimalCount: Int): Double {
     val factor = 10f.pow(decimalCount)
