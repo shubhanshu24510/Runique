@@ -1,5 +1,9 @@
 package com.shubhans.wear.run.presentation
 
+import android.content.pm.PackageManager
+import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.rememberScrollableState
 import androidx.compose.foundation.gestures.scrollable
@@ -15,14 +19,17 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import androidx.wear.compose.material3.FilledTonalIconButton
 import androidx.wear.compose.material3.Icon
 import androidx.wear.compose.material3.IconButtonDefaults
@@ -56,6 +63,41 @@ fun TrackableScreen(
     state: TrackerState,
     onAction: (TrackerAction) -> Unit,
 ) {
+    val permissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestMultiplePermissions()
+    ){permissions ->
+        val hasBodySensorsPermission = permissions[android.Manifest.permission.BODY_SENSORS] == true
+        onAction(TrackerAction.OnBodySensorPermissionResult(hasBodySensorsPermission))
+    }
+
+    val context = LocalContext.current
+    LaunchedEffect(key1 = true) {
+        val hasBodySensorsPermission = ContextCompat.checkSelfPermission(
+            context,
+            android.Manifest.permission.BODY_SENSORS
+        ) == PackageManager.PERMISSION_GRANTED
+        onAction(TrackerAction.OnBodySensorPermissionResult(hasBodySensorsPermission))
+
+        val hasNotificationPermission = if(Build.VERSION.SDK_INT >= 33) {
+            ContextCompat.checkSelfPermission(
+                context,
+                android.Manifest.permission.ACCESS_NOTIFICATION_POLICY
+            ) == PackageManager.PERMISSION_GRANTED
+        } else {
+            true
+        }
+
+        val permissions = mutableListOf<String>()
+        if(!hasBodySensorsPermission) {
+            permissions.add(android.Manifest.permission.BODY_SENSORS)
+        }
+        if(!hasNotificationPermission) {
+            permissions.add(android.Manifest.permission.ACCESS_NOTIFICATION_POLICY)
+        }
+
+        permissionLauncher.launch(permissions.toTypedArray())
+    }
+
     if (state.hasConnectedPhoneNearby) {
         Column(
             modifier = Modifier
@@ -65,17 +107,18 @@ fun TrackableScreen(
             verticalArrangement = Arrangement.Center,
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .padding(horizontal = 16.dp),
             ) {
                 TrackerRunCard(
                     title = stringResource(id = R.string.Heart_rate),
-                    value = if (state.conTrackableHeartRate) {
+                    value = if (state.canTrackableHeartRate) {
                         state.heartRate.formattedHeartRate()
                     } else {
                         stringResource(id = R.string.unsupported)
                     },
-                    onValueTextColor = if (state.conTrackableHeartRate) {
+                    onValueTextColor = if (state.canTrackableHeartRate) {
                         MaterialTheme.colorScheme.onSurface
                     } else {
                         MaterialTheme.colorScheme.error
@@ -192,7 +235,7 @@ fun TrackableScreenPreview() {
     RuniqueTheme {
         TrackableScreen(
             state = TrackerState(
-                conTrackableHeartRate = true,
+                canTrackableHeartRate = true,
                 hasConnectedPhoneNearby = true,
                 trackable = true,
                 isRunActive = false,

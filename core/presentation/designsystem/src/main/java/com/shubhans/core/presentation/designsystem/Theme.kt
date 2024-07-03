@@ -1,5 +1,6 @@
 package com.shubhans.core.presentation.designsystem
 
+import android.R.id.primary
 import android.app.Activity
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
@@ -8,21 +9,21 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
+
 val DarkColorScheme = darkColorScheme(
     primary = RuniqueGreen,
     background = RuniqueBlack,
     surface = RuniqueDarkGray,
     secondary = RuniqueWhite,
     tertiary = RuniqueWhite,
+    onSurface = RuniqueDarkGray,
     primaryContainer = RuniqueGreen30,
-    onPrimary = RuniqueBlack,
     onBackground = RuniqueWhite,
-    onSurface = RuniqueWhite,
-    onSurfaceVariant = RuniqueGray,
+    onPrimary = RuniqueBlack,
     error = RuniqueDarkRed,
-    errorContainer = RuniqueDarkRed5
+    onErrorContainer = RuniqueDarkRed5,
+    onSurfaceVariant = RuniqueGray,
 )
-
 @Composable
 fun RuniqueTheme(
     content: @Composable () -> Unit

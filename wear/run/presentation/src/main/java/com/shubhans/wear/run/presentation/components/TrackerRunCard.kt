@@ -24,7 +24,7 @@ fun TrackerRunCard(
     Column(
         modifier = modifier
             .clip(RoundedCornerShape(15.dp))
-            .background(MaterialTheme.colorScheme.surface)
+            .background(MaterialTheme.colorScheme.onSurface)
             .padding(8.dp)
 
     ) {

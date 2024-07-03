@@ -19,6 +19,9 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.bundles.koin.compose)
-
     implementation(projects.core.presentation.designsystemWear)
+    implementation(libs.bundles.koin)
+    implementation(projects.wear.run.presentation)
+    implementation(projects.wear.run.data)
+
 }
