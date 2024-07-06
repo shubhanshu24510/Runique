@@ -6,6 +6,7 @@ import com.google.android.play.core.splitcompat.SplitCompat
 import com.shubhans.auth.data.di.authDataModule
 import com.shubhans.auth.presentation.AuthViewModelModule
 import com.shubhans.auth.presentation.di.authViewModuleModule
+import com.shubhans.connectivity.data.di.coreConnectivityDataModule
 import com.shubhans.core.data.di.coreDataModule
 import com.shubhans.core.database.di.databaseModule
 import com.shubhans.run.data.di.runDataModule
@@ -42,7 +43,8 @@ class RuniqueApp : Application() {
                 locationModule,
                 databaseModule,
                 networkKoinModule,
-                runDataModule
+                runDataModule,
+                coreConnectivityDataModule
             )
         }
     }

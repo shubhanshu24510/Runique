@@ -19,6 +19,7 @@ import com.shubhans.run.domain.LocationDataCalculator
 import com.shubhans.run.domain.LocationObserver
 import com.shubhans.run.domain.RunData
 import com.shubhans.run.domain.RunningTracker
+import com.shubhans.run.domain.WatchConnector
 import com.shubhans.run.presentation.run_active.services.ActiveRunService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -38,6 +39,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.flow.zip
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import kotlin.math.roundToInt
@@ -46,7 +48,8 @@ import kotlin.time.Duration.Companion.seconds
 
 class ActiveRunViewModel(
     private val runningTracker: RunningTracker,
-    private val runRepository: RunRepository
+    private val runRepository: RunRepository,
+    private val watchConnector: WatchConnector
 ) : ViewModel() {
 
     var state by mutableStateOf(
@@ -72,6 +75,12 @@ class ActiveRunViewModel(
     }.stateIn(viewModelScope, SharingStarted.Lazily, false)
 
     init {
+        watchConnector.connectedDevice
+            .filterNotNull()
+            .onEach {
+                Timber.d("New Devices Detected: ${it.displayName}")
+            }.launchIn(viewModelScope)
+
         hasLocationPermission
             .onEach { hasPermission ->
                 if (hasPermission) {

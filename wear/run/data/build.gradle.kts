@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.shubhans.wear.run.data"
+    namespace = "com.plcoding.wear.run.data"
     defaultConfig {
         minSdk = 30
     }
@@ -14,4 +14,6 @@ dependencies {
     implementation(libs.bundles.koin)
     implementation(projects.wear.run.domain)
     implementation(projects.core.domain)
+    implementation(projects.core.connectivity.domain)
+    implementation(projects.core.connectivity.data)
 }

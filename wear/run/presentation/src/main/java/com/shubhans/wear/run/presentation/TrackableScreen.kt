@@ -37,6 +37,7 @@ import androidx.wear.compose.material3.MaterialTheme
 import androidx.wear.compose.material3.OutlinedIconButton
 import androidx.wear.compose.material3.Text
 import androidx.wear.compose.ui.tooling.preview.WearPreviewDevices
+import com.plcoding.wear.run.presentation.R
 import com.shubhans.core.presentation.designsystem.ExclamationMarkIcon
 import com.shubhans.core.presentation.designsystem.FinishIcon
 import com.shubhans.core.presentation.designsystem.PauseIcon
@@ -112,7 +113,7 @@ fun TrackableScreen(
                     .padding(horizontal = 16.dp),
             ) {
                 TrackerRunCard(
-                    title = stringResource(id = R.string.Heart_rate),
+                    title = stringResource(id = R.string.heart_rate),
                     value = if (state.canTrackableHeartRate) {
                         state.heartRate.formattedHeartRate()
                     } else {
@@ -171,7 +172,7 @@ fun TrackableScreen(
                     }
                 }else {
                     Text(
-                        text = stringResource(id = R.string.onen_runique_screen),
+                        text = stringResource(id = R.string.open_active_run_screen),
                         textAlign = TextAlign.Center,
                         overflow = TextOverflow.Visible,
                         modifier = Modifier.padding(horizontal = 16.dp)
@@ -196,7 +197,7 @@ fun TrackableScreen(
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = stringResource(id = R.string.no_phone_nearby), textAlign = TextAlign.Center
+                text = stringResource(id = R.string.connect_your_phone), textAlign = TextAlign.Center
             )
         }
     }

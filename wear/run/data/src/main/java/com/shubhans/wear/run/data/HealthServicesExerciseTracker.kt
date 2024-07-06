@@ -24,6 +24,7 @@ import androidx.health.services.client.pauseExercise
 import androidx.health.services.client.prepareExercise
 import androidx.health.services.client.resumeExercise
 import androidx.health.services.client.startExercise
+import com.plcoding.wear.run.data.BuildConfig
 import com.shubhans.core.domain.utils.EmptyResult
 import com.shubhans.core.domain.utils.Result
 import com.shubhans.wear.run.domain.ExerciseError

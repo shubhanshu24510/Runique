@@ -16,4 +16,7 @@ dependencies {
     implementation(libs.androidx.work)
     implementation(libs.koin.android.workmanager)
     implementation(libs.kotlinx.serialization.json)
+
+    implementation(projects.core.connectivity.domain)
+    implementation(projects.core.connectivity.data)
 }

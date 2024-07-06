@@ -21,7 +21,10 @@ dependencies {
     implementation(libs.bundles.koin.compose)
     implementation(projects.core.presentation.designsystemWear)
     implementation(libs.bundles.koin)
+
     implementation(projects.wear.run.presentation)
     implementation(projects.wear.run.data)
 
+    implementation(projects.core.connectivity.data)
+    implementation(projects.core.connectivity.domain)
 }
