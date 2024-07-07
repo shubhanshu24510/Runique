@@ -1,7 +1,7 @@
 package com.shubhans.wear.app.presentation
 
 import android.app.Application
-import com.shubhans.connectivity.data.di.coreConnectivityDataModule
+import com.shubhans.connectivity.domain.di.coreConnectivityDataModule
 import com.shubhans.wear.app.presentation.di.appModule
 import com.shubhans.wear.run.data.di.wearRunDataModule
 import com.shubhans.wear.run.presentation.di.wearRunPresentationModule

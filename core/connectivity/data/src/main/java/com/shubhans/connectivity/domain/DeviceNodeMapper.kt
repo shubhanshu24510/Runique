@@ -1,4 +1,4 @@
-package com.shubhans.connectivity.data
+package com.shubhans.connectivity.domain
 
 import com.google.android.gms.wearable.Node
 
