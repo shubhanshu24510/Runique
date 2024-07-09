@@ -1,6 +1,8 @@
 package com.shubhans.connectivity.domain.messaging
 
 import kotlinx.serialization.Serializable
+import kotlin.time.Duration
+
 @Serializable
 sealed interface MessagingActionDto {
     @Serializable
@@ -20,6 +22,6 @@ sealed interface MessagingActionDto {
     @Serializable
     data class DistanceUpdate(val distanceMeters: Double) : MessagingActionDto
     @Serializable
-    data class ElapsedTimeUpdate(val elapsedTime: Int) : MessagingActionDto
+    data class ElapsedTimeUpdate(val elapsedTime: Duration) : MessagingActionDto
 
 }

@@ -5,6 +5,7 @@ import com.shubhans.wear.run.data.HealthServicesExerciseTracker
 import com.shubhans.wear.run.data.WatchToPhoneConnector
 import com.shubhans.wear.run.domain.ExerciseTracker
 import com.shubhans.wear.run.domain.PhoneConnector
+import com.shubhans.wear.run.domain.RunningTracker
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module

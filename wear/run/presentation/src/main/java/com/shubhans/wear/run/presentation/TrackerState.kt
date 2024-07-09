@@ -3,7 +3,7 @@ package com.shubhans.wear.run.presentation
 import kotlin.time.Duration
 
 data class TrackerState(
-    val elatedTime: Duration = Duration.ZERO,
+    val elapsedDuration: Duration = Duration.ZERO,
     val heartRate: Int = 0,
     val distanceMeters: Int = 0,
     val trackable: Boolean = false,

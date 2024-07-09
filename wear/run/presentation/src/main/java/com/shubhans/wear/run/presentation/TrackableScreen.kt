@@ -2,11 +2,10 @@ package com.shubhans.wear.run.presentation
 
 import android.content.pm.PackageManager
 import android.os.Build
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.rememberScrollableState
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -43,6 +42,7 @@ import com.shubhans.core.presentation.designsystem.FinishIcon
 import com.shubhans.core.presentation.designsystem.PauseIcon
 import com.shubhans.core.presentation.designsystem.StartIcon
 import com.shubhans.core.presentation.designsystem_wear.RuniqueTheme
+import com.shubhans.core.presentation.ui.ObserverEvent
 import com.shubhans.core.presentation.ui.formatted
 import com.shubhans.core.presentation.ui.formattedHeartRate
 import com.shubhans.core.presentation.ui.toFormattedKm
@@ -53,6 +53,21 @@ import org.koin.androidx.compose.koinViewModel
 fun TrackableScreenRoot(
     viewModel: TrackableViewModel = koinViewModel(),
 ) {
+    val context = LocalContext.current
+    ObserverEvent(flow = viewModel.events) { event ->
+        when (event) {
+            is TrackerEvent.Error -> {
+                Toast.makeText(
+                    context,
+                    event.message.asString(context),
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+            }
+
+            is TrackerEvent.RunFinished -> Unit
+        }
+    }
     TrackableScreen(
         state = viewModel.state,
         onAction = viewModel::onAction,
@@ -66,7 +81,7 @@ fun TrackableScreen(
 ) {
     val permissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestMultiplePermissions()
-    ){permissions ->
+    ) { permissions ->
         val hasBodySensorsPermission = permissions[android.Manifest.permission.BODY_SENSORS] == true
         onAction(TrackerAction.OnBodySensorPermissionResult(hasBodySensorsPermission))
     }
@@ -79,7 +94,7 @@ fun TrackableScreen(
         ) == PackageManager.PERMISSION_GRANTED
         onAction(TrackerAction.OnBodySensorPermissionResult(hasBodySensorsPermission))
 
-        val hasNotificationPermission = if(Build.VERSION.SDK_INT >= 33) {
+        val hasNotificationPermission = if (Build.VERSION.SDK_INT >= 33) {
             ContextCompat.checkSelfPermission(
                 context,
                 android.Manifest.permission.ACCESS_NOTIFICATION_POLICY
@@ -89,10 +104,10 @@ fun TrackableScreen(
         }
 
         val permissions = mutableListOf<String>()
-        if(!hasBodySensorsPermission) {
+        if (!hasBodySensorsPermission) {
             permissions.add(android.Manifest.permission.BODY_SENSORS)
         }
-        if(!hasNotificationPermission) {
+        if (!hasNotificationPermission) {
             permissions.add(android.Manifest.permission.ACCESS_NOTIFICATION_POLICY)
         }
 
@@ -135,7 +150,7 @@ fun TrackableScreen(
             }
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = state.elatedTime.formatted(),
+                text = state.elapsedDuration.formatted(),
                 fontSize = 24.sp,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.onPrimary,
@@ -159,7 +174,7 @@ fun TrackableScreen(
                     if (!state.isRunActive && state.isRunningStarted) {
                         FilledTonalIconButton(
                             onClick = {
-                                onAction(TrackerAction.onFinished)
+                                onAction(TrackerAction.onFinishedClick)
                             }, colors = IconButtonDefaults.filledTonalIconButtonColors(
                                 contentColor = MaterialTheme.colorScheme.onBackground,
                             )
@@ -170,7 +185,7 @@ fun TrackableScreen(
                             )
                         }
                     }
-                }else {
+                } else {
                     Text(
                         text = stringResource(id = R.string.open_active_run_screen),
                         textAlign = TextAlign.Center,
@@ -197,7 +212,8 @@ fun TrackableScreen(
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = stringResource(id = R.string.connect_your_phone), textAlign = TextAlign.Center
+                text = stringResource(id = R.string.connect_your_phone),
+                textAlign = TextAlign.Center
             )
         }
     }

@@ -1,5 +1,7 @@
 package com.shubhans.connectivity.domain.messageing
 
+import kotlin.time.Duration
+
 sealed interface MessagingAction {
     data object StartOrResume : MessagingAction
     data object Pause : MessagingAction
@@ -9,6 +11,6 @@ sealed interface MessagingAction {
     data object connectionRequest : MessagingAction
     data class HeartRateUpdate(val heartRate: Int) : MessagingAction
     data class DistanceUpdate(val distanceMeters: Double) : MessagingAction
-    data class ElapsedTimeUpdate(val elapsedTime: Int) : MessagingAction
+    data class ElapsedTimeUpdate(val elapsedTime: Duration) : MessagingAction
 
 }
