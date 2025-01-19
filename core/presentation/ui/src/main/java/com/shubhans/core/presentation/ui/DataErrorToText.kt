@@ -1,8 +1,6 @@
 package com.shubhans.core.presentation.ui
 
-import androidx.compose.ui.res.stringResource
 import com.shubhans.core.domain.utils.DataError
-import com.shubhans.core.presentation.ui.UiText
 
 fun DataError.asUiText(): UiText {
     return when(this) {

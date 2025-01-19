@@ -9,8 +9,8 @@ dependencies {
     implementation(project(":app"))
     implementation(libs.androidx.navigation.compose)
 
-    api(projects.analyticss.presentation)
-    implementation(projects.analyticss.domain)
-    implementation(projects.analyticss.data)
+    api(projects.analytics.presentation)
+    implementation(projects.analytics.domain)
+    implementation(projects.analytics.data)
     implementation(projects.core.database)
 }

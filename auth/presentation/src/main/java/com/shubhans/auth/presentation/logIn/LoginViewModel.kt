@@ -1,12 +1,8 @@
-@file:OptIn(ExperimentalFoundationApi::class)
-
 package com.shubhans.auth.presentation.logIn
 
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.text2.input.textAsFlow
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shubhans.auth.domain.AuthRepository
@@ -16,6 +12,7 @@ import com.shubhans.core.domain.utils.DataError
 import com.shubhans.core.domain.utils.Result
 import com.shubhans.core.presentation.ui.UiText
 import com.shubhans.core.presentation.ui.asUiText
+import com.shubhans.core.presentation.ui.textAsFlow
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
@@ -83,6 +80,7 @@ class LoginViewModel(
         }
     }
 }
+
 
 
 

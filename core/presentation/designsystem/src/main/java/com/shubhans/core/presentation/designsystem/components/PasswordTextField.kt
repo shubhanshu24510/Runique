@@ -1,6 +1,5 @@
 package com.shubhans.core.presentation.designsystem.components
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -13,10 +12,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text2.BasicSecureTextField
-import androidx.compose.foundation.text2.input.TextFieldState
-import androidx.compose.foundation.text2.input.TextObfuscationMode
-import androidx.compose.foundation.text2.input.rememberTextFieldState
+import androidx.compose.foundation.text.BasicSecureTextField
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.input.TextFieldState
+import androidx.compose.foundation.text.input.TextObfuscationMode
+import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalTextStyle
@@ -43,7 +43,6 @@ import com.shubhans.core.presentation.designsystem.LockIcon
 import com.shubhans.core.presentation.designsystem.R
 import com.shubhans.core.presentation.designsystem.RuniqueTheme
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun RuniquePasswordTextField(
     state: TextFieldState,
@@ -80,7 +79,9 @@ fun RuniquePasswordTextField(
             textStyle = LocalTextStyle.current.copy(
                 color = MaterialTheme.colorScheme.onBackground
             ),
-            keyboardType = KeyboardType.Password,
+            keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardType = KeyboardType.Password
+            ),
             cursorBrush = SolidColor(MaterialTheme.colorScheme.onBackground),
             modifier = Modifier
                 .clip(RoundedCornerShape(16.dp))
@@ -152,7 +153,6 @@ fun RuniquePasswordTextField(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Preview
 @Composable
 private fun RuniqueTextFieldPreview() {

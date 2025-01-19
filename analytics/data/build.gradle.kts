@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.shubhans.analyticss.data"
+    namespace = "com.shubhans.analytics.data"
 }
 
 dependencies {
@@ -13,5 +13,5 @@ dependencies {
 
     implementation(projects.core.database)
     implementation(projects.core.domain)
-    implementation(projects.analyticss.domain)
+    implementation(projects.analytics.domain)
 }

@@ -1,7 +1,5 @@
 package com.shubhans.auth.presentation.register
 
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.text2.input.textAsFlow
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -14,13 +12,13 @@ import com.shubhans.core.domain.utils.DataError
 import com.shubhans.core.domain.utils.Result
 import com.shubhans.core.presentation.ui.UiText
 import com.shubhans.core.presentation.ui.asUiText
+import com.shubhans.core.presentation.ui.textAsFlow
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalFoundationApi::class)
 class RegisterViewModel(
     private val userDataValidator: UserDataValidater,
     private val repository: AuthRepository
