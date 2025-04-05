@@ -1,4 +1,5 @@
-# Runique
+# <h1 align="center">Runique</h1>
+
 
 Runique is a multi-module running tracker apps that monitors health and running data tracks with current location and is available on both mobile devices and Wear OS platforms.
 
