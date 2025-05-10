@@ -24,7 +24,9 @@
 ## 🔍 Preview
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/743e7ac7-4d2f-433b-aa81-1707ba1e165c" alt="screen-2" width="1000"/>
+  <img src="https://github.com/user-attachments/assets/2d036617-ca27-4deb-9991-31cbfd7be733" alt="screen-2" width="256"/>
+  <img src="https://github.com/user-attachments/assets/25062f7a-4994-48ad-9387-2cdae243396d" alt="screen-2" width="256"/>
+  <img src="https://github.com/user-attachments/assets/27e96095-254e-4a5f-9c24-93b16de50c77" alt="screen-2" width="256"/>
 </p>
 
 ---
