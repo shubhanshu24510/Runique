@@ -9,6 +9,7 @@
 </p>
 
 <table align="center">
+
   <tr>
     <td align="center">
       <img src="https://pl-coding.com/wp-content/uploads/2024/04/auth-feature.png" alt="Auth Feature" width="400"/>
@@ -23,9 +24,7 @@
 ## 🔍 Preview
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/abb714d9-72f5-4c32-9af2-20a3ad7f7f84" alt="screen-2" width="250"/>
-  <img src="https://github.com/user-attachments/assets/db11a83b-0bd1-4e6e-b7ed-2bd1700cc3d1" alt="screen-1" width="250"/>
-    <img src="https://github.com/user-attachments/assets/c57cb6ae-3a5d-447a-9088-411e5574ea7d" alt="screen-3" width="250"/>
+  <img src="[https://github.com/user-attachments/assets/abb714d9-72f5-4c32-9af2-20a3ad7f7f84](https://github.com/user-attachments/assets/607164b2-8c32-4aa9-8f2a-ee4fffa39369)" alt="screen-2""/>
 </p>
 
 ---
