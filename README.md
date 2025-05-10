@@ -1,7 +1,52 @@
+<h1 align="center">🏃‍♂️ Runique - Running Tracker App</h1>
 
-4. Sync and build the project — you're ready to run! 🚀
+<p align="center">
+  <b>Runique</b> is a multi-module, offline-first running tracker app that monitors your health, tracks your runs with real-time location, and supports both Android mobile and Wear OS platforms.
+</p>
+
+<p align="center">
+  <img src="https://pl-coding.com/wp-content/uploads/2024/04/run-feature.png" alt="Run Feature" width="800"/>
+</p>
+
+<table align="center">
+  <tr>
+    <td align="center">
+      <img src="https://pl-coding.com/wp-content/uploads/2024/04/auth-feature.png" alt="Auth Feature" width="400"/>
+    </td>
+    <td align="center">
+      <img src="https://pl-coding.com/wp-content/uploads/2024/04/phone-watch-mockup.png" alt="Phone Watch Mockup" width="300"/>
+    </td>
+  </tr>
+</table>
 
 ---
+
+## 🔍 Preview
+
+https://github.com/shubhanshu24510/Runiquee/assets/100926922/b0268e64-c22d-4db4-ae6c-1cfc077e7798
+
+---
+
+## ✨ Features
+
+- 🔁 **Real-time Run Tracking**: Track your runs using Google Maps and draw running paths.
+- 📊 **Health Metrics**: View data such as Distance, Heart Rate, Pace, Speed, Elevation, and more.
+- 📷 **Map Snapshots**: Capture and display run paths with data on the overview screen.
+- 📶 **Offline-First**: All data is stored locally using Room DB and syncs with the server when online.
+- ⌚ **Wear OS Support**: Real-time tracking and display optimized for Wear OS smartwatches.
+
+---
+
+## 🧩 Key Highlights
+
+- Multi-module, clean MVI architecture
+- OAuth authentication with token refresh
+- Offline-first with Room Database
+- Dynamic Feature Modules for modular builds
+- Health & Fitness tracking using Google Health SDK
+- Google Maps SDK integration
+- Full support for Wear OS devices
+- Gradle Version Catalogs & Convention Plugins
 
 ## 🛠️ Tech Stack
 
@@ -86,7 +131,21 @@ Runique follows **MVI (Model-View-Intent)** with a **Repository Pattern**, and a
 - Google Health Services
 - Google Maps SDK
 - Dynamic Feature Delivery
+---
 
+---
+## How do you run the project?
+
+In order to run the project on your phone, you'll need to first clone it and then add two API keys for:
+1. ... the Runique API (access granted after course purchase)
+2. ... Google Maps (needs to be got from Google Cloud Console - instructions in the course)
+
+Then simply include them in `local.properties`:
+```
+API_KEY=<RUNIQUE_API_KEY>
+MAPS_API_KEY=<GOOGLE_MAPS_API_KEY>
+```
+Afterwards, build the project and you're ready to use it.
 ---
 
 ## ❤️ Support
