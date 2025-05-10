@@ -23,10 +23,7 @@
 
 ## 🔍 Preview
 
-<p align="center">
-  <img src="[https://github.com/user-attachments/assets/abb714d9-72f5-4c32-9af2-20a3ad7f7f84](https://github.com/user-attachments/assets/607164b2-8c32-4aa9-8f2a-ee4fffa39369)" alt="screen-2""/>
-</p>
-
+https://github.com/user-attachments/assets/607164b2-8c32-4aa9-8f2a-ee4fffa39369
 ---
 
 ## ✨ Features
