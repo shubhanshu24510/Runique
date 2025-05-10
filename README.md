@@ -23,7 +23,8 @@
 
 ## 🔍 Preview
 
-https://github.com/user-attachments/assets/607164b2-8c32-4aa9-8f2a-ee4fffa39369
+https://github.com/shubhanshu24510/Runiquee/assets/100926922/b0268e64-c22d-4db4-ae6c-1cfc077e7798
+
 ---
 
 ## ✨ Features
