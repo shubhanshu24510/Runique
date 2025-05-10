@@ -18,15 +18,15 @@
     </td>
   </tr>
 </table>
-
 ---
 
 ## 🔍 Preview
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/2d036617-ca27-4deb-9991-31cbfd7be733" alt="screen-2" width="256"/>
-  <img src="https://github.com/user-attachments/assets/25062f7a-4994-48ad-9387-2cdae243396d" alt="screen-2" width="256"/>
-  <img src="https://github.com/user-attachments/assets/27e96095-254e-4a5f-9c24-93b16de50c77" alt="screen-2" width="256"/>
+  <img src="https://github.com/user-attachments/assets/9595f001-d684-4e89-a2db-85e529b3ac2f" alt="screen-2" width="300"/>
+  <img src="https://github.com/user-attachments/assets/059814ab-a71c-4598-a970-6762d6dc49eb" alt="screen-2" width="300"/>
+  <img src="https://github.com/user-attachments/assets/0c3ca916-8963-4832-8335-e7369b908b1f
+" alt="screen-2" width="300"/>
 </p>
 
 ---
