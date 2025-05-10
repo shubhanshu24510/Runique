@@ -23,13 +23,15 @@
 
 ## 🔍 Preview
 
-https://github.com/shubhanshu24510/Runiquee/assets/100926922/b0268e64-c22d-4db4-ae6c-1cfc077e7798
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/743e7ac7-4d2f-433b-aa81-1707ba1e165c" alt="screen-2" width="1000"/>
+</p>
 
 ---
 
 ## ✨ Features
 
-- 🔁 **Real-time Run Tracking**: Track your runs using Google Maps and draw running paths.
+- 🔁 **Real-time Run Tracking**: Track your runs using Google Maps and draw running paths using google map drawlines.
 - 📊 **Health Metrics**: View data such as Distance, Heart Rate, Pace, Speed, Elevation, and more.
 - 📷 **Map Snapshots**: Capture and display run paths with data on the overview screen.
 - 📶 **Offline-First**: All data is stored locally using Room DB and syncs with the server when online.
