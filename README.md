@@ -23,10 +23,9 @@
 ## 🔍 Preview
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/9595f001-d684-4e89-a2db-85e529b3ac2f" alt="screen-2" width="300"/>
-  <img src="https://github.com/user-attachments/assets/059814ab-a71c-4598-a970-6762d6dc49eb" alt="screen-2" width="300"/>
-  <img src="https://github.com/user-attachments/assets/0c3ca916-8963-4832-8335-e7369b908b1f
-" alt="screen-2" width="300"/>
+  <img src="https://github.com/user-attachments/assets/9595f001-d684-4e89-a2db-85e529b3ac2f" alt="screen-2" width="260"/>
+  <img src="https://github.com/user-attachments/assets/059814ab-a71c-4598-a970-6762d6dc49eb" alt="screen-2" width="260"/>
+  <img src="https://github.com/user-attachments/assets/0c3ca916-8963-4832-8335-e7369b908b1f" alt="screen-2" width="260"/>
 </p>
 
 ---
