@@ -145,13 +145,23 @@ API_KEY=<RUNIQUE_API_KEY>
 MAPS_API_KEY=<GOOGLE_MAPS_API_KEY>
 ```
 Afterwards, build the project and you're ready to use it.
----
-
-## ❤️ Support
-
-If you found this project useful, consider giving it a ⭐ and [following me on GitHub](https://github.com/shubhanshu24510) for more awesome projects!
 
 ---
+
+## 🤝 Support
+
+If you like this project, please consider ⭐ starring the repo and following me for more cool Android projects!
+
+☕ You can also support my work by buying me a coffee:
+
+<p align="left">
+  <a href="https://buymeacoffee.com/shubhanshu24510" target="_blank">
+    <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="60" width="217">
+  </a>
+</p>
+
+---
+
 
 ## 📄 License
 
