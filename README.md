@@ -42,10 +42,12 @@ https://github.com/shubhanshu24510/Runiquee/assets/100926922/b0268e64-c22d-4db4-
 - OAuth authentication with token refresh
 - Offline-first with Room Database
 - Dynamic Feature Modules for modular builds
+- Remote APIs, local databases & caching strategies
 - Health & Fitness tracking using Google Health SDK
-- Google Maps SDK integration
+- Location tracking with the Google Maps SDK
 - Full support for Wear OS devices
 - Gradle Version Catalogs & Convention Plugins
+- Implement watch to phone communication and what it takes to correctly sync exercise data
 
 ## 🛠️ Tech Stack
 
